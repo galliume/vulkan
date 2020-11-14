@@ -16,9 +16,11 @@ int main(int argc, char** argv)
 
 	const uint32_t WIDTH = 800;
 	const uint32_t HEIGHT = 600;
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
-
 	Vulkan vulkanImpl = Vulkan();
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
+	glfwSetWindowUserPointer(window, &vulkanImpl);
+	glfwSetFramebufferSizeCallback(window, vulkanImpl.framebufferResizeCallback);
+
 	vulkanImpl.init(window);
 
 	while (!glfwWindowShouldClose(window))
@@ -27,6 +29,7 @@ int main(int argc, char** argv)
 		vulkanImpl.drawFrame();
 	}
 
+	vulkanImpl.cleanUp();
 	glfwDestroyWindow(window);
 	glfwTerminate();
 }

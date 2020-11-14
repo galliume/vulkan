@@ -22,13 +22,12 @@ struct SwapChainSupportDetails
 	std::vector<VkSurfaceFormatKHR> formats;
 	std::vector<VkPresentModeKHR> presentModes;
 };
-struct Vertex 
-{
+struct Vertex {
 	glm::vec2 pos;
 	glm::vec3 color;
+	glm::vec2 texCoord;
 
-	static VkVertexInputBindingDescription getBindingDescription() 
-	{
+	static VkVertexInputBindingDescription getBindingDescription() {
 		VkVertexInputBindingDescription bindingDescription{};
 		bindingDescription.binding = 0;
 		bindingDescription.stride = sizeof(Vertex);
@@ -36,9 +35,9 @@ struct Vertex
 
 		return bindingDescription;
 	}
-	static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() 
-	{
-		std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+
+	static std::array<VkVertexInputAttributeDescription, 3> getAttributeDescriptions() {
+		std::array<VkVertexInputAttributeDescription, 3> attributeDescriptions{};
 
 		attributeDescriptions[0].binding = 0;
 		attributeDescriptions[0].location = 0;
@@ -50,6 +49,11 @@ struct Vertex
 		attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
 		attributeDescriptions[1].offset = offsetof(Vertex, color);
 
+		attributeDescriptions[2].binding = 0;
+		attributeDescriptions[2].location = 2;
+		attributeDescriptions[2].format = VK_FORMAT_R32G32_SFLOAT;
+		attributeDescriptions[2].offset = offsetof(Vertex, texCoord);
+
 		return attributeDescriptions;
 	}
 };
@@ -59,10 +63,10 @@ struct UniformBufferObject {
 	alignas(16) glm::mat4 proj;
 };
 const std::vector<Vertex> vertices = {
-{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
-{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
-{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
-{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
+	{{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {1.0f, 0.0f}},
+	{{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {0.0f, 0.0f}},
+	{{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}, {0.0f, 1.0f}},
+	{{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}, {1.0f, 1.0f}}
 };
 const std::vector<uint16_t> indices =
 {
@@ -73,41 +77,6 @@ class Vulkan
 public:
 	Vulkan();
 	inline static Vulkan& Get() { return *s_Instance; }
-
-	void createInstance();
-	inline VkInstance getInstance() { return instance; };
-	void createSurface();
-	inline VkSurfaceKHR* getSurface() { return &surface; };
-		
-	void pickPhysicalDevice();
-	void createLogicalDevice();
-	inline VkPhysicalDevice getPhysicalDevice() { return physicalDevice; };
-
-	void createDescriptorPool();
-	void createDescriptorSets();
-
-	void createSwapChain();		
-
-	void createDescriptorSetLayout();
-
-	void createUniformBuffers();
-		
-	void recreateSwapChain();
-
-	void createGraphicsPipeline();
-	void createImageViews();		
-
-	void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
-	void createIndexBuffer();
-	void createGraphicsPipline();
-	void createRenderPass();
-	void createFramebuffers();
-	void createCommandPool();
-	void createCommandBuffers();
-	void createSyncObjects();
-	void cleanupSwapChain();
-	void createVertexBuffer();
-
 	inline void setWindow(GLFWwindow* glfwWindow) { window = glfwWindow; };
 	inline GLFWwindow* getWindow() { return window; };
 	inline VkRenderPass getRenderPass() { return renderPass; };
@@ -168,7 +137,36 @@ private:
 	std::vector<VkDeviceMemory> uniformBuffersMemory;
 	VkDescriptorPool descriptorPool;
 	std::vector<VkDescriptorSet> descriptorSets;
+	VkImage textureImage;
+	VkDeviceMemory textureImageMemory;
+	VkImageView textureImageView;
+	VkSampler textureSampler;
 private:
+	void createInstance();
+	inline VkInstance getInstance() { return instance; };
+	void createSurface();
+	inline VkSurfaceKHR* getSurface() { return &surface; };
+	void pickPhysicalDevice();
+	void createLogicalDevice();
+	inline VkPhysicalDevice getPhysicalDevice() { return physicalDevice; };
+	void createDescriptorPool();
+	void createDescriptorSets();
+	void createSwapChain();
+	void createDescriptorSetLayout();
+	void createUniformBuffers();
+	void recreateSwapChain();
+	void createGraphicsPipeline();
+	void createImageViews();
+	void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
+	void createIndexBuffer();
+	void createGraphicsPipline();
+	void createRenderPass();
+	void createFramebuffers();
+	void createCommandPool();
+	void createCommandBuffers();
+	void createSyncObjects();
+	void cleanupSwapChain();
+	void createVertexBuffer();
 	SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 	VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
 	VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
@@ -184,4 +182,13 @@ private:
 	uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 	void updateUniformBuffer(uint32_t currentImage);
+	void createTextureImage();
+	void createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
+	VkCommandBuffer beginSingleTimeCommands();
+	void endSingleTimeCommands(VkCommandBuffer commandBuffer);
+	void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+	void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
+	void createTextureImageView();
+	VkImageView createImageView(VkImage image, VkFormat format);
+	void createTextureSampler();
 };

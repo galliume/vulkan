@@ -46,6 +46,7 @@ project "VulkanImpl"
 	includedirs
 	{
 		"src",
+		"vendor/spdlog/include",
 		"vendor/stb_image",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLM}",
