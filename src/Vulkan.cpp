@@ -14,6 +14,9 @@
 #include <chrono>
 #include "iostream"
 
+
+#include "VulkanContext.h"
+
 constexpr bool enableValidationLayers = true;
 
 VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback)
@@ -69,11 +72,14 @@ Vulkan::Vulkan()
 void Vulkan::init(GLFWwindow* glfWwindow)
 {
     window = glfWwindow;
-    createInstance(); ///
-    setupDebugMessenger(); ///
-    createSurface(); ///
-    pickPhysicalDevice(); ///
-    createLogicalDevice(); ///
+    //createInstance(); //
+    Vulk::VulkanContext vulkanContext = Vulk::VulkanContext(window);
+
+    /*
+    setupDebugMessenger(); //
+    createSurface(); //
+    pickPhysicalDevice(); //
+    createLogicalDevice(); //
     createSwapChain();//
     createImageViews();//
     createRenderPass();//
@@ -91,9 +97,10 @@ void Vulkan::init(GLFWwindow* glfWwindow)
     createDescriptorPool();//
     createDescriptorSets();//
     createCommandBuffers();//
-    createSyncObjects();
+    */
+    //createSyncObjects();
 }
-
+/*
 void Vulkan::cleanUp()
 {
     cleanupSwapChain();
@@ -286,3 +293,4 @@ void Vulkan::drawFrame()
 
     currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
+    */

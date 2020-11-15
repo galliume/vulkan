@@ -37,7 +37,7 @@ namespace Vulk {
 
 	VulkanContext::VulkanContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle) 
 	{
-
+        Create();
 	};
 
 	VulkanContext::~VulkanContext() 

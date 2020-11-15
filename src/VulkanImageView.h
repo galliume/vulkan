@@ -2,6 +2,7 @@
 
 #include "VulkanLogicalDevice.h"
 #include "VulkanSwapChain.h"
+#include "VulkanTextureImage.h"
 
 #include "vulkan/vulkan.h"
 
@@ -9,7 +10,7 @@ namespace Vulk {
 	class VulkanImageView
 	{
 	public:
-		VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanTextureImage* vulkanTextureImage);
 		~VulkanImageView();
 		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 		VkImageView CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
@@ -23,6 +24,7 @@ namespace Vulk {
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
 		VkImageView m_DepthImageView;
 		VkImage m_DepthImage;
+		VulkanTextureImage* m_VulkanTextureImage;
 		VkDeviceMemory m_DepthImageMemory;
 		VkImageView m_TextureImageView;
 		VkImageView m_ImageView;

@@ -4,8 +4,8 @@
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
-    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
-        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
+    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanTextureImage* vulkanTextureImage)
+        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanTextureImage(vulkanTextureImage)
 	{
 
 	}
@@ -15,9 +15,10 @@ namespace Vulk {
 
 	}
 
-    void VulkanImageView::CreateTextureImageView()
+    VkImageView VulkanImageView::CreateTextureImageView()
     {
-        m_TextureImageView = CreateImageView(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+        m_TextureImageView = CreateImageView(m_VulkanTextureImage->GetTextureImage(), VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+        return m_TextureImageView
     }
 
     VkImageView VulkanImageView::CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)

@@ -15,6 +15,7 @@ namespace Vulk {
 		VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool);
 		~VulkanTextureImage();
 		void CreateTextureImage();
+		inline VkImage GetTextureImage() { return m_TextureImage; };
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
 		VulkanImageView* m_VulkanImageView;

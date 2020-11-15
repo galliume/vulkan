@@ -6,6 +6,9 @@
 #include "VulkanDescriptorSetLayout.h"
 
 #include "vulkan/vulkan.h"
+#include "glm/glm.hpp"
+
+#include <array>
 
 namespace Vulk {
 
