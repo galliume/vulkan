@@ -57,10 +57,11 @@ namespace Vulk {
 		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.apiVersion = VK_API_VERSION_1_2;
 
-
-        if (m_EnableValidationLayers && !CheckValidationLayerSupport()) {
+#ifdef EnableValidationLayers
+        if (!CheckValidationLayerSupport()) {
             VULK_CRITICAL("Validations layers not available !");
         }
+#endif
 
         VkValidationFeatureEnableEXT enables[] = { VK_VALIDATION_FEATURE_ENABLE_BEST_PRACTICES_EXT };
         VkValidationFeaturesEXT features = {};
@@ -83,15 +84,15 @@ namespace Vulk {
         createInfo.ppEnabledExtensionNames = extensions.data();
 
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
-        if (m_EnableValidationLayers) {
+#ifdef EnableValidationLayers
             createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
             createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
             PopulateDebugMessengerCreateInfo(debugCreateInfo);
             createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
-        } else {
+#else
             createInfo.enabledLayerCount = 0;
             createInfo.pNext = nullptr;
-        }
+#endif
 
         if (vkCreateInstance(&createInfo, nullptr, &m_VkInstance) != VK_SUCCESS) {
             VULK_CRITICAL("failed to create Vulkan instance!");
@@ -143,9 +144,9 @@ namespace Vulk {
 
         std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 
-        if (m_EnableValidationLayers) {
+#ifdef EnableValidationLayers
             extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-        }
+#endif
 
         return extensions;
     }

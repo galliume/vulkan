@@ -86,16 +86,16 @@ Vulkan::Vulkan()
 void Vulkan::init(GLFWwindow* glfWwindow)
 {
     window = glfWwindow;
-    createInstance();
-    setupDebugMessenger();
-    createSurface();
-    pickPhysicalDevice();
-    createLogicalDevice();
-    createSwapChain();
-    createImageViews();
-    createRenderPass();
-    createDescriptorSetLayout();
-    createGraphicsPipeline();
+    createInstance(); //
+    setupDebugMessenger(); //
+    createSurface(); //
+    pickPhysicalDevice(); //
+    createLogicalDevice(); //
+    createSwapChain();//
+    createImageViews();//
+    createRenderPass();//
+    createDescriptorSetLayout();//
+    createGraphicsPipeline();//
     createDepthResources();
     createFramebuffers();
     createCommandPool();

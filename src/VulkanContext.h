@@ -1,10 +1,10 @@
 #pragma once
 
-#define GLFW_INCLUDE_VULKAN
-#include "GLFW/glfw3.h"
+#include "VulkanPhysicalDevice.h"
 
 #include "vulkan/vulkan.h"
 
+#include "GLFW//glfw3.h"
 #include <vector>
 
 namespace Vulk {
@@ -15,11 +15,11 @@ namespace Vulk {
 
 		void Create();
 		void SwapBuffers();
+		inline GLFWwindow* GetWindow() { return m_WindowHandle; };
 	private:
 		GLFWwindow* m_WindowHandle;
 		VkInstance m_VkInstance;
 		VkSurfaceKHR m_Surface;
-		bool m_EnableValidationLayers = true;
 		const std::vector<const char*>m_ValidationLayers = { "VK_LAYER_KHRONOS_validation" };
 	private:
 		bool CheckValidationLayerSupport();

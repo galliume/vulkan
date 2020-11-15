@@ -20,6 +20,8 @@ int main(int argc, char** argv)
 	const uint32_t WIDTH = 800;
 	const uint32_t HEIGHT = 600;
 	
+	#define EnableValidationLayers true;
+
 	Vulk::Log::Init();
 	glfwInit();
 
