@@ -1,13 +1,14 @@
 #include "Vulkan.h"
+#include "Log.h"
+
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
+
 #define GLM_FORCE_RADIANS
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "stb_image.h"
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
+
 
 #include <set>
 #include <fstream>
@@ -15,8 +16,6 @@
 #include "iostream"
 
 constexpr bool enableValidationLayers = true;
-
-std::shared_ptr<spdlog::logger>Logger = spdlog::stdout_color_mt("VulkanImpl");
 
 VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback)
 {
@@ -31,24 +30,21 @@ VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMes
 
 static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
 {
-
-    spdlog::set_pattern("%^[%T] %n: %v%$");
-
     switch (messageSeverity)
     {
         case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
         {
-            Logger->critical(pCallbackData->pMessage);
+            VULK_CRITICAL(pCallbackData->pMessage);
             break;
         }
         case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
         {
-            Logger->warn(pCallbackData->pMessage);
+            VULK_WARN(pCallbackData->pMessage);
             break;
         }
         default:
         {
-            Logger->trace(pCallbackData->pMessage);
+            VULK_TRACE(pCallbackData->pMessage);
         }
     }
 

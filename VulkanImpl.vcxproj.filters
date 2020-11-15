@@ -30,7 +30,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Log.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Vulkan.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanContext.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="vendor\GLM\glm\common.hpp">
@@ -1265,7 +1271,13 @@
     <ClCompile Include="src\App.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Log.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Vulkan.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanContext.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">

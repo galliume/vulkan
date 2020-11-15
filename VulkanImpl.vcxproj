@@ -127,7 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Log.h" />
     <ClInclude Include="src\Vulkan.h" />
+    <ClInclude Include="src\VulkanContext.h" />
     <ClInclude Include="vendor\GLM\glm\common.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_fixes.hpp" />
@@ -540,7 +542,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Vulkan.cpp" />
+    <ClCompile Include="src\VulkanContext.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
