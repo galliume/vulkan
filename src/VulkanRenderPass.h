@@ -18,7 +18,9 @@ namespace Vulk {
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
 	private:
 		VulkanSwapChain* m_VulkanSwapChain;
+		//@todo delete duplicate in VulkanImageView
 		VkFormat FindDepthFormat();
+		//@todo delete duplicate in VulkanImageView
 		VkFormat FindSupportedFormat(const std::vector<VkFormat>& candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
 	};
 }
