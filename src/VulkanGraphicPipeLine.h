@@ -50,10 +50,12 @@ namespace Vulk {
 		VulkanGraphicPipeLine(
 			VulkanRenderPass* vulkanRenderPass,
 			VulkanLogicalDevice* vulkanLogicalDevice,
-			VulkanSwapChain* vulkanSwapChain, 
+			VulkanSwapChain* vulkanSwapChain,
 			VulkanDescriptorSetLayout* vulkanDescriptorSetLayout
 		);
 		~VulkanGraphicPipeLine();
+		inline VkPipeline GetGraphicsPipeline() { return m_GraphicsPipeline; };
+		inline VkPipelineLayout GetPipelineLayout() { return m_PipelineLayout; };
 	private:
 		VulkanRenderPass* m_VulkanRenderPass;
 		VulkanLogicalDevice* m_VulkanLogicalDevice;

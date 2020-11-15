@@ -5,7 +5,7 @@
 
 namespace Vulk {
 	VulkanRenderPass::VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanPhysicalDevice* vulkanPhysicalDevice, VulkanLogicalDevice* vulkanLogicalDevice)
-        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanPhysicalDevice(vulkanPhysicalDevice), m_VulkanLogicalDevice(vulkanLogicalDevice)
+        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 
 	}
@@ -89,7 +89,7 @@ namespace Vulk {
         for (VkFormat format : candidates)
         {
             VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_VulkanPhysicalDevice->GetPhysicalDevice(), format, &props);
+            vkGetPhysicalDeviceFormatProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
 
             if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
             {

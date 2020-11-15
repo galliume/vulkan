@@ -5,8 +5,8 @@
 #include "GLFW/glfw3.h"
 
 namespace Vulk {
-	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext,VulkanPhysicalDevice* vulkanPhysicalDevice, VulkanLogicalDevice* vulkanLogicalDevice, VkSurfaceKHR* surface)
-        : m_VulkanContext(vulkanContext), m_VulkanPhysicalDevice(vulkanPhysicalDevice), m_VulkanLogicalDevice(vulkanLogicalDevice), m_Surface(surface)
+	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice, VkSurfaceKHR* surface)
+        : m_VulkanContext(vulkanContext), m_VulkanLogicalDevice(vulkanLogicalDevice), m_Surface(surface)
 	{
 
 	}
@@ -18,7 +18,7 @@ namespace Vulk {
 
     void VulkanSwapChain::CreateSwapChain()
     {
-        SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(m_VulkanPhysicalDevice->GetPhysicalDevice());
+        SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(m_VulkanLogicalDevice->GetPhysicalDevice());
 
         VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
         VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
@@ -41,7 +41,7 @@ namespace Vulk {
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        QueueFamilyIndices indices = m_VulkanPhysicalDevice->GetQueueFamilyIndices();
+        QueueFamilyIndices indices = m_VulkanLogicalDevice->GetQueueFamilyIndices();
         uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
         if (indices.graphicsFamily != indices.presentFamily) {

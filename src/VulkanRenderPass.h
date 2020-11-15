@@ -1,6 +1,5 @@
 #pragma once
 #include "VulkanSwapChain.h"
-#include "VulkanPhysicalDevice.h"
 #include "VulkanLogicalDevice.h"
 #include "vulkan/vulkan.h"
 
@@ -8,13 +7,13 @@ namespace Vulk {
 	class VulkanRenderPass
 	{
 	public:
-		VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanPhysicalDevice* vulkanPhysicalDevice, VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanRenderPass();
 		void CreateRenderPass();
+		VulkanLogicalDevice* GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
 		inline VkRenderPass GetRenderPass() { m_RenderPass; };
 	private:
 		VkRenderPass m_RenderPass;
-		VulkanPhysicalDevice* m_VulkanPhysicalDevice;
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
 	private:
 		VulkanSwapChain* m_VulkanSwapChain;

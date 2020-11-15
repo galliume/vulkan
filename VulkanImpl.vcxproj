@@ -129,9 +129,17 @@
   <ItemGroup>
     <ClInclude Include="src\Log.h" />
     <ClInclude Include="src\Vulkan.h" />
+    <ClInclude Include="src\VulkanCommandPool.h" />
     <ClInclude Include="src\VulkanContext.h" />
+    <ClInclude Include="src\VulkanDescriptorSetLayout.h" />
+    <ClInclude Include="src\VulkanFrameBuffer.h" />
+    <ClInclude Include="src\VulkanGraphicPipeLine.h" />
+    <ClInclude Include="src\VulkanImageView.h" />
     <ClInclude Include="src\VulkanLogicalDevice.h" />
     <ClInclude Include="src\VulkanPhysicalDevice.h" />
+    <ClInclude Include="src\VulkanRenderPass.h" />
+    <ClInclude Include="src\VulkanSwapChain.h" />
+    <ClInclude Include="src\VulkanTextureImage.h" />
     <ClInclude Include="vendor\GLM\glm\common.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_fixes.hpp" />
@@ -541,15 +549,34 @@
     <ClInclude Include="vendor\GLM\glm\vec4.hpp" />
     <ClInclude Include="vendor\GLM\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="VulkanDescriptorPool.h" />
+    <ClInclude Include="VulkanDescriptorSet.h" />
+    <ClInclude Include="VulkanIndexBuffer.h" />
+    <ClInclude Include="VulkanTextureSampler.h" />
+    <ClInclude Include="VulkanUniformBuffer.h" />
+    <ClInclude Include="VulkanVertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Log.cpp" />
-    <ClCompile Include="src\VulkanLogicalDevice.cpp" />
     <ClCompile Include="src\Vulkan.cpp" />
+    <ClCompile Include="src\VulkanCommandPool.cpp" />
     <ClCompile Include="src\VulkanContext.cpp" />
+    <ClCompile Include="src\VulkanDescriptorSetLayout.cpp" />
+    <ClCompile Include="src\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="src\VulkanGraphicPipeLine.cpp" />
+    <ClCompile Include="src\VulkanImageView.cpp" />
+    <ClCompile Include="src\VulkanLogicalDevice.cpp" />
     <ClCompile Include="src\VulkanPhysicalDevice.cpp" />
+    <ClCompile Include="src\VulkanRenderPass.cpp" />
+    <ClCompile Include="src\VulkanSwapChain.cpp" />
+    <ClCompile Include="src\VulkanTextureImage.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="VulkanDescriptorPool.cpp" />
+    <ClCompile Include="VulkanIndexBuffer.cpp" />
+    <ClCompile Include="VulkanTextureSampler.cpp" />
+    <ClCompile Include="VulkanUniformBuffer.cpp" />
+    <ClCompile Include="VulkanVertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

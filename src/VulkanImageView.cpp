@@ -4,8 +4,8 @@
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
-    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanPhysicalDevice* vulkanPhysicalDevice, VulkanLogicalDevice* vulkanLogicalDevice)
-        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanPhysicalDevice(vulkanPhysicalDevice), m_VulkanLogicalDevice(vulkanLogicalDevice)
+    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
+        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 
 	}
@@ -14,6 +14,11 @@ namespace Vulk {
 	{
 
 	}
+
+    void VulkanImageView::CreateTextureImageView()
+    {
+        m_TextureImageView = CreateImageView(textureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+    }
 
     VkImageView VulkanImageView::CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
     {
@@ -28,13 +33,12 @@ namespace Vulk {
         viewInfo.subresourceRange.baseArrayLayer = 0;
         viewInfo.subresourceRange.layerCount = 1;
 
-        VkImageView imageView;
-        if (vkCreateImageView(m_VulkanLogicalDevice->GetDevice(), &viewInfo, nullptr, &imageView) != VK_SUCCESS)
+        if (vkCreateImageView(m_VulkanLogicalDevice->GetDevice(), &viewInfo, nullptr, &m_ImageView) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to create texture image view!");
         }
 
-        return imageView;
+        return m_ImageView;
     }
 
     void VulkanImageView::CreateDepthResources()
@@ -92,7 +96,7 @@ namespace Vulk {
     uint32_t VulkanImageView::FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
     {
         VkPhysicalDeviceMemoryProperties memProperties;
-        vkGetPhysicalDeviceMemoryProperties(m_VulkanPhysicalDevice->GetPhysicalDevice(), &memProperties);
+        vkGetPhysicalDeviceMemoryProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), &memProperties);
 
         for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
         {
@@ -119,7 +123,7 @@ namespace Vulk {
         for (VkFormat format : candidates)
         {
             VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_VulkanPhysicalDevice->GetPhysicalDevice(), format, &props);
+            vkGetPhysicalDeviceFormatProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
 
             if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
             {
