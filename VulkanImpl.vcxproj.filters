@@ -30,7 +30,64 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Log.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Vulkan.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanCommandBuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanCommandPool.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanContext.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanDescriptorPool.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanDescriptorSet.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanDescriptorSetLayout.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanFrameBuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanGraphicPipeLine.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanImageView.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanIndexBuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanLogicalDevice.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanPhysicalDevice.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanRenderPass.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanSwapChain.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanTextureImage.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanTextureSampler.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanUniformBuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VulkanVertexBuffer.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="vendor\GLM\glm\common.hpp">
@@ -1265,7 +1322,64 @@
     <ClCompile Include="src\App.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Log.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Vulkan.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanCommandBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanCommandPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanContext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanDescriptorPool.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanDescriptorSet.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanDescriptorSetLayout.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanFrameBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanGraphicPipeLine.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanImageView.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanIndexBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanLogicalDevice.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanPhysicalDevice.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanRenderPass.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanSwapChain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanTextureImage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanTextureSampler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanUniformBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanVertexBuffer.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">

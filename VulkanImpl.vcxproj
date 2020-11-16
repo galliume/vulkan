@@ -127,7 +127,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Log.h" />
     <ClInclude Include="src\Vulkan.h" />
+    <ClInclude Include="src\VulkanCommandBuffer.h" />
+    <ClInclude Include="src\VulkanCommandPool.h" />
+    <ClInclude Include="src\VulkanContext.h" />
+    <ClInclude Include="src\VulkanDescriptorPool.h" />
+    <ClInclude Include="src\VulkanDescriptorSet.h" />
+    <ClInclude Include="src\VulkanDescriptorSetLayout.h" />
+    <ClInclude Include="src\VulkanFrameBuffer.h" />
+    <ClInclude Include="src\VulkanGraphicPipeLine.h" />
+    <ClInclude Include="src\VulkanImageView.h" />
+    <ClInclude Include="src\VulkanIndexBuffer.h" />
+    <ClInclude Include="src\VulkanLogicalDevice.h" />
+    <ClInclude Include="src\VulkanPhysicalDevice.h" />
+    <ClInclude Include="src\VulkanRenderPass.h" />
+    <ClInclude Include="src\VulkanSwapChain.h" />
+    <ClInclude Include="src\VulkanTextureImage.h" />
+    <ClInclude Include="src\VulkanTextureSampler.h" />
+    <ClInclude Include="src\VulkanUniformBuffer.h" />
+    <ClInclude Include="src\VulkanVertexBuffer.h" />
     <ClInclude Include="vendor\GLM\glm\common.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\GLM\glm\detail\_fixes.hpp" />
@@ -540,7 +559,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Vulkan.cpp" />
+    <ClCompile Include="src\VulkanCommandBuffer.cpp" />
+    <ClCompile Include="src\VulkanCommandPool.cpp" />
+    <ClCompile Include="src\VulkanContext.cpp" />
+    <ClCompile Include="src\VulkanDescriptorPool.cpp" />
+    <ClCompile Include="src\VulkanDescriptorSet.cpp" />
+    <ClCompile Include="src\VulkanDescriptorSetLayout.cpp" />
+    <ClCompile Include="src\VulkanFrameBuffer.cpp" />
+    <ClCompile Include="src\VulkanGraphicPipeLine.cpp" />
+    <ClCompile Include="src\VulkanImageView.cpp" />
+    <ClCompile Include="src\VulkanIndexBuffer.cpp" />
+    <ClCompile Include="src\VulkanLogicalDevice.cpp" />
+    <ClCompile Include="src\VulkanPhysicalDevice.cpp" />
+    <ClCompile Include="src\VulkanRenderPass.cpp" />
+    <ClCompile Include="src\VulkanSwapChain.cpp" />
+    <ClCompile Include="src\VulkanTextureImage.cpp" />
+    <ClCompile Include="src\VulkanTextureSampler.cpp" />
+    <ClCompile Include="src\VulkanUniformBuffer.cpp" />
+    <ClCompile Include="src\VulkanVertexBuffer.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
