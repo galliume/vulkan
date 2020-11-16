@@ -5,7 +5,6 @@
 #include "spdlog/fmt/ostr.h"
 
 #define GLM_FORCE_RADIANS
-#include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "stb_image.h"
 
@@ -16,6 +15,7 @@
 
 
 #include "VulkanContext.h"
+#include "VulkanPhysicalDevice.h"
 
 constexpr bool enableValidationLayers = true;
 
@@ -71,10 +71,8 @@ Vulkan::Vulkan()
 
 void Vulkan::init(GLFWwindow* glfWwindow)
 {
-    window = glfWwindow;
-    //createInstance(); //
-    Vulk::VulkanContext vulkanContext = Vulk::VulkanContext(window);
-
+    //window = glfWwindow;
+    //createInstance(); // 
     /*
     setupDebugMessenger(); //
     createSurface(); //

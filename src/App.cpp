@@ -1,19 +1,16 @@
-#include <iostream>
-#include <stdexcept>
-#include <functional>
-#include <cstdlib>
-
-#define GLFW_INCLUDE_VULKAN
+#include "vulkan/vulkan.h"
 #include "GLFW/glfw3.h"
 
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
-
-#include "vulkan/vulkan.h"
 #include "Log.h"
-#include "VulkanContext.h"
 
+#include "VulkanContext.h"
+#include "VulkanPhysicalDevice.h"
+#include "VulkanLogicalDevice.h"
+#include "VulkanSwapChain.h"
+#include "VulkanImageView.h"
+#include "VulkanRenderPass.h"
+#include "VulkanDescriptorSetLayout.h"
+#include "VulkanGraphicPipeLine.h"
 
 int main(int argc, char** argv)
 {
@@ -31,7 +28,15 @@ int main(int argc, char** argv)
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
 	
 	Vulk::VulkanContext vulkanContext = Vulk::VulkanContext(window);
-	vulkanContext.Create();
+	Vulk::VulkanPhysicalDevice vulkanPhysicalDevice = Vulk::VulkanPhysicalDevice(&vulkanContext);
+	Vulk::VulkanLogicalDevice vulkanLogicalDevice = Vulk::VulkanLogicalDevice(&vulkanPhysicalDevice);
+	Vulk::VulkanSwapChain vulkanSwapChain = Vulk::VulkanSwapChain(&vulkanContext, &vulkanLogicalDevice);
+	Vulk::VulkanImageView vulkanImageView = Vulk::VulkanImageView(&vulkanSwapChain, &vulkanLogicalDevice);
+	Vulk::VulkanRenderPass vulkanRenderPass = Vulk::VulkanRenderPass(&vulkanSwapChain, &vulkanLogicalDevice);
+	Vulk::VulkanDescriptorSetLayout vulkanDescriptorSetLayout = Vulk::VulkanDescriptorSetLayout(&vulkanLogicalDevice);
+	Vulk::VulkanGraphicPipeLine vulkanGraphicPipeLine = Vulk::VulkanGraphicPipeLine(
+		&vulkanRenderPass, &vulkanLogicalDevice, &vulkanSwapChain, &vulkanDescriptorSetLayout
+	);
 
 	glfwSetWindowUserPointer(window, &vulkanContext);
 	

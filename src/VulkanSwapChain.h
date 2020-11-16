@@ -1,7 +1,6 @@
 #pragma once
 
 #include "VulkanContext.h"
-#include "VulkanPhysicalDevice.h"
 #include "VulkanLogicalDevice.h"
 
 #include "vulkan/vulkan.h"
@@ -10,7 +9,7 @@ namespace Vulk {
 
 	class VulkanSwapChain {
 	public:
-		VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice, VkSurfaceKHR* surface);
+		VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanSwapChain();
 		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
 		void CreateSwapChain();
@@ -21,7 +20,6 @@ namespace Vulk {
 	private:
 		VulkanContext* m_VulkanContext;
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkSurfaceKHR* m_Surface;
 		VkSwapchainKHR m_SwapChain = VK_NULL_HANDLE;
 		std::vector<VkImage>m_SwapChainImages = { };
 		VkFormat m_SwapChainImageFormat = { };

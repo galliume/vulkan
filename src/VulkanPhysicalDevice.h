@@ -1,5 +1,6 @@
 #pragma once
 
+#include "VulkanContext.h"
 #include "vulkan/vulkan.h"
 #include <optional>
 #include <vector>
@@ -23,14 +24,13 @@ namespace Vulk {
 	class VulkanPhysicalDevice
 	{
 	public:
-		VulkanPhysicalDevice(VkInstance* instance, VkSurfaceKHR* surface);
+		VulkanPhysicalDevice(VulkanContext* vulkanContext);
 		~VulkanPhysicalDevice();
 		inline QueueFamilyIndices GetQueueFamilyIndices() { return m_QueueFamilyIndices; };
 		inline const std::vector<const char*> GetDeviceExtensions() { return m_DeviceExtensions; };
 		inline VkPhysicalDevice GetPhysicalDevice() { return m_PhysicalDevice; };
 	private:
-		VkInstance* m_VkInstance;
-		VkSurfaceKHR* m_Surface;
+		VulkanContext* m_VulkanContext;
 		QueueFamilyIndices m_QueueFamilyIndices;
 		VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 		const std::vector<const char*> m_DeviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };

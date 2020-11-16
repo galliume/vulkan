@@ -5,8 +5,8 @@
 #include "GLFW/glfw3.h"
 
 namespace Vulk {
-	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice, VkSurfaceKHR* surface)
-        : m_VulkanContext(vulkanContext), m_VulkanLogicalDevice(vulkanLogicalDevice), m_Surface(surface)
+	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice)
+        : m_VulkanContext(vulkanContext), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 
 	}
@@ -33,7 +33,7 @@ namespace Vulk {
 
         VkSwapchainCreateInfoKHR createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-        createInfo.surface = *m_Surface;
+        createInfo.surface = m_VulkanContext->GetSurface();
         createInfo.minImageCount = imageCount;
         createInfo.imageFormat = surfaceFormat.format;
         createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -78,25 +78,25 @@ namespace Vulk {
     {
         SwapChainSupportDetails details;
 
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, *m_Surface, &details.capabilities);
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_VulkanContext->GetSurface(), &details.capabilities);
 
         uint32_t formatCount;
-        vkGetPhysicalDeviceSurfaceFormatsKHR(device, *m_Surface, &formatCount, nullptr);
+        vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_VulkanContext->GetSurface(), &formatCount, nullptr);
 
         if (formatCount != 0)
         {
             details.formats.resize(formatCount);
-            vkGetPhysicalDeviceSurfaceFormatsKHR(device, *m_Surface, &formatCount, details.formats.data());
+            vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_VulkanContext->GetSurface(), &formatCount, details.formats.data());
 
         }
 
         uint32_t presentModeCount;
-        vkGetPhysicalDeviceSurfacePresentModesKHR(device, *m_Surface, &presentModeCount, nullptr);
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_VulkanContext->GetSurface(), &presentModeCount, nullptr);
 
         if (presentModeCount != 0)
         {
             details.presentModes.resize(presentModeCount);
-            vkGetPhysicalDeviceSurfacePresentModesKHR(device, *m_Surface, &presentModeCount, details.presentModes.data());
+            vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_VulkanContext->GetSurface(), &presentModeCount, details.presentModes.data());
         }
 
         return details;
