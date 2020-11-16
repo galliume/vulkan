@@ -4,7 +4,7 @@
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
-	VulkanRenderPass::VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanPhysicalDevice* vulkanPhysicalDevice, VulkanLogicalDevice* vulkanLogicalDevice)
+	VulkanRenderPass::VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 

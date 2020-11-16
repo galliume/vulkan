@@ -4,21 +4,16 @@
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
-    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanTextureImage* vulkanTextureImage)
-        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanTextureImage(vulkanTextureImage)
-	{
+    
+    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
+        : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
+    {
 
-	}
+    }
 
     VulkanImageView::~VulkanImageView()
-	{
-
-	}
-
-    VkImageView VulkanImageView::CreateTextureImageView()
     {
-        m_TextureImageView = CreateImageView(m_VulkanTextureImage->GetTextureImage(), VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
-        return m_TextureImageView
+
     }
 
     VkImageView VulkanImageView::CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
@@ -47,11 +42,11 @@ namespace Vulk {
         VkFormat depthFormat = FindDepthFormat();
 
         CreateImage(
-            m_VulkanSwapChain->GetSwapChainExtent().width, 
-            m_VulkanSwapChain->GetSwapChainExtent().height, 
-            depthFormat, 
-            VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 
-            m_DepthImage, 
+            m_VulkanSwapChain->GetSwapChainExtent().width,
+            m_VulkanSwapChain->GetSwapChainExtent().height,
+            depthFormat,
+            VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+            m_DepthImage,
             m_DepthImageMemory
         );
         m_DepthImageView = CreateImageView(m_DepthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);

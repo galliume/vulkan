@@ -10,7 +10,7 @@ namespace Vulk {
 		~VulkanLogicalDevice();
 		void CreateLogicalDevice();
 		inline VkDevice GetDevice() { return m_LogicalDevice; };
-		inline QueueFamilyIndices GetQueueFamilyIndices() { m_VulkanPhysicalDevice->GetQueueFamilyIndices(); };
+		inline QueueFamilyIndices GetQueueFamilyIndices() { return m_VulkanPhysicalDevice->GetQueueFamilyIndices(); };
 		inline VkPhysicalDevice GetPhysicalDevice() { return m_VulkanPhysicalDevice->GetPhysicalDevice(); };
 		inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; };
 	private:

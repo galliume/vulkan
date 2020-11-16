@@ -11,7 +11,7 @@ namespace Vulk {
 		~VulkanRenderPass();
 		void CreateRenderPass();
 		VulkanLogicalDevice* GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
-		inline VkRenderPass GetRenderPass() { m_RenderPass; };
+		inline VkRenderPass GetRenderPass() { return m_RenderPass; };
 	private:
 		VkRenderPass m_RenderPass;
 		VulkanLogicalDevice* m_VulkanLogicalDevice;

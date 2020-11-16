@@ -1,9 +1,8 @@
 #pragma once
 
-#include "VulkanImageView.h"
 #include "VulkanLogicalDevice.h"
 #include "VulkanCommandPool.h"
-
+#include "VulkanImageView.h"
 #include "vulkan/vulkan.h"
 
 #include <vector>
@@ -12,16 +11,18 @@ namespace Vulk {
 	class VulkanTextureImage
 	{
 	public:
-		VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool);
+		VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView);
 		~VulkanTextureImage();
 		void CreateTextureImage();
 		inline VkImage GetTextureImage() { return m_TextureImage; };
+		VkImageView CreateTextureImageView();
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VulkanImageView* m_VulkanImageView;
 		VulkanCommandPool* m_VulkanCommandPool;
 		VkImage m_TextureImage;
 		VkDeviceMemory m_TextureImageMemory;
+		VulkanImageView* m_VulkanImageView;
+		VkImageView m_TextureImageView;
 	private:
 		//@todo duplicate in VulkanVertexBuffer
 		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);

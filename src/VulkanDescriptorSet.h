@@ -2,7 +2,7 @@
 
 #include "VulkanSwapChain.h"
 #include "VulkanLogicalDevice.h"
-#include "VulkanImageView.h"
+#include "VulkanTextureImage.h"
 #include "VulkanTextureSampler.h"
 #include "VulkanDescriptorPool.h"
 #include "VulkanUniformBuffer.h"
@@ -18,7 +18,7 @@ namespace Vulk {
 		VulkanDescriptorSet(
 			VulkanSwapChain* vulkanSwapChain,
 			VulkanLogicalDevice* vulkanLogicalDevice,
-			VulkanImageView* vulkanImageView,
+			VulkanTextureImage* vulkanTextureImage,
 			VulkanTextureSampler* vulkanTextureSampler,
 			VulkanDescriptorPool* vulkanDescriptorPool,
 			VulkanUniformBuffer* vulkanUniformBuffer
@@ -32,7 +32,7 @@ namespace Vulk {
 		VulkanSwapChain* m_VulkanSwapChain;
 		VulkanLogicalDevice* m_VulkanLogicalDevice;
 		VkDescriptorSetLayout m_DescriptorSetLayout;
-		VulkanImageView* m_VulkanImageView;
+		VulkanTextureImage* m_VulkanTextureImage;
 		VulkanTextureSampler* m_VulkanTextureSampler;
 		VulkanDescriptorPool* m_VulkanDescriptorPool;
 		VulkanUniformBuffer* m_VulkanUniformBuffer;

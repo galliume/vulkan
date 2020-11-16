@@ -11,13 +11,13 @@ namespace Vulk {
     VulkanDescriptorSet::VulkanDescriptorSet(
         VulkanSwapChain* vulkanSwapChain, 
         VulkanLogicalDevice* vulkanLogicalDevice, 
-        VulkanImageView* vulkanImageView,
+        VulkanTextureImage* vulkanTextureImage,
         VulkanTextureSampler* vulkanTextureSampler,
         VulkanDescriptorPool* vulkanDescriptorPool,
         VulkanUniformBuffer* vulkanUniformBuffer
     )
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), 
-        m_VulkanImageView(vulkanImageView), m_VulkanTextureSampler(vulkanTextureSampler),
+        m_VulkanTextureImage(vulkanTextureImage), m_VulkanTextureSampler(vulkanTextureSampler),
         m_VulkanDescriptorPool(vulkanDescriptorPool), m_VulkanUniformBuffer(vulkanUniformBuffer)
     {
 
@@ -52,7 +52,7 @@ namespace Vulk {
 
             VkDescriptorImageInfo imageInfo{};
             imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-            imageInfo.imageView = m_VulkanImageView->CreateTextureImageView();
+            imageInfo.imageView = m_VulkanTextureImage->CreateTextureImageView();
             imageInfo.sampler = m_VulkanTextureSampler->GetTextureSampler();
 
             std::array<VkWriteDescriptorSet, 2> descriptorWrites{};

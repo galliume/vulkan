@@ -6,8 +6,8 @@
 #include "stb_image.h"
 
 namespace Vulk {
-	VulkanTextureImage::VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool)
-        : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView), m_VulkanCommandPool(vulkanCommandPool)
+	VulkanTextureImage::VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView)
+        : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanCommandPool(vulkanCommandPool), m_VulkanImageView(vulkanImageView)
 	{
 
 	}
@@ -203,5 +203,11 @@ namespace Vulk {
         vkQueueWaitIdle(m_VulkanLogicalDevice->GetGraphicsQueue());
 
         vkFreeCommandBuffers(m_VulkanLogicalDevice->GetDevice(), m_VulkanCommandPool->GetCommandPool(), 1, &commandBuffer);
+    }
+
+    VkImageView VulkanTextureImage::CreateTextureImageView()
+    {
+        m_TextureImageView = m_VulkanImageView->CreateImageView(GetTextureImage(), VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+        return m_TextureImageView;
     }
 }

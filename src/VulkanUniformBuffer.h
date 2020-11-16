@@ -31,6 +31,6 @@ namespace Vulk {
 	private:
 		void CreateUniformBuffers();
 		//@todo duplicate in VulkanVertexBuffer
-		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory)
+		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
 	};
 }

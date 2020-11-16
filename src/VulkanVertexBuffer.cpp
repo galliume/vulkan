@@ -15,7 +15,7 @@ namespace Vulk {
 
     void VulkanVertexBuffer::CreateVertexBuffer()
     {
-        VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
+        VkDeviceSize bufferSize = sizeof(Vertices[0]) * Vertices.size();
 
         VkBuffer stagingBuffer;
         VkDeviceMemory stagingBufferMemory;
@@ -23,7 +23,7 @@ namespace Vulk {
 
         void* data;
         vkMapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
-        memcpy(data, vertices.data(), (size_t)bufferSize);
+        memcpy(data, Vertices.data(), (size_t)bufferSize);
         vkUnmapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory);
 
         CreateBuffer(
