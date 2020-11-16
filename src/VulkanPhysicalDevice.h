@@ -30,8 +30,8 @@ namespace Vulk {
 		inline const std::vector<const char*> GetDeviceExtensions() { return m_DeviceExtensions; };
 		inline VkPhysicalDevice GetPhysicalDevice() { return m_PhysicalDevice; };
 	private:
-		VulkanContext* m_VulkanContext;
 		QueueFamilyIndices m_QueueFamilyIndices;
+		VulkanContext* m_VulkanContext = VK_NULL_HANDLE;
 		VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
 		const std::vector<const char*> m_DeviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 	private:

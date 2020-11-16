@@ -69,11 +69,11 @@ namespace Vulk {
 		void CreateVertexBuffer();
 		inline VkBuffer GetVertexBuffer() { return m_VertexBuffer; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkBuffer m_VertexBuffer;
-		VkDeviceMemory m_VertexBufferMemory;
-		VulkanImageView* m_VulkanImageView;
-		VulkanCommandPool* m_VulkanCommandPool;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;
+		VulkanImageView* m_VulkanImageView = nullptr;
+		VulkanCommandPool* m_VulkanCommandPool = nullptr;
+		VkDeviceMemory m_VertexBufferMemory = VK_NULL_HANDLE;
 	private:
 		//@todo duplicate in VulkanTextureImage
 		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);

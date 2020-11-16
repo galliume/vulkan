@@ -22,13 +22,13 @@ namespace Vulk {
 		void CreateIndexBuffer();
 		inline VkBuffer GetIndexBuffer() { return m_IndexBuffer; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkBuffer m_VertexBuffer;
-		VkDeviceMemory m_VertexBufferMemory;
-		VulkanImageView* m_VulkanImageView;
-		VulkanCommandPool* m_VulkanCommandPool;
-		VkBuffer m_IndexBuffer;
-		VkDeviceMemory m_IndexBufferMemory;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;
+		VkDeviceMemory m_VertexBufferMemory = VK_NULL_HANDLE;
+		VulkanImageView* m_VulkanImageView = VK_NULL_HANDLE;
+		VulkanCommandPool* m_VulkanCommandPool = VK_NULL_HANDLE;
+		VkBuffer m_IndexBuffer = VK_NULL_HANDLE;
+		VkDeviceMemory m_IndexBufferMemory = VK_NULL_HANDLE;
 	private:
 		//@todo duplicate in VulkanTextureImage
 		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);

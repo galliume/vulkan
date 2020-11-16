@@ -15,8 +15,8 @@ namespace Vulk {
 		void CreateDescriptorPool();
 		inline VkDescriptorPool GetDescriptorPool() { return m_DescriptorPool; };
 	private:
-		VkDescriptorPool m_DescriptorPool;
-		VulkanSwapChain* m_VulkanSwapChain;
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
+		VulkanSwapChain* m_VulkanSwapChain = nullptr;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkDescriptorPool m_DescriptorPool = VK_NULL_HANDLE;
 	};
 }

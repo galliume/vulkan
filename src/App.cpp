@@ -11,6 +11,16 @@
 #include "VulkanRenderPass.h"
 #include "VulkanDescriptorSetLayout.h"
 #include "VulkanGraphicPipeLine.h"
+#include "VulkanFrameBuffer.h"
+#include "VulkanCommandPool.h"
+#include "VulkanTextureImage.h"
+#include "VulkanTextureSampler.h"
+#include "VulkanVertexBuffer.h"
+#include "VulkanIndexBuffer.h"
+#include "VulkanUniformBuffer.h"
+#include "VulkanDescriptorPool.h"
+#include "VulkanDescriptorSet.h"
+#include "VulkanCommandBuffer.h"
 
 int main(int argc, char** argv)
 {
@@ -36,6 +46,20 @@ int main(int argc, char** argv)
 	Vulk::VulkanDescriptorSetLayout vulkanDescriptorSetLayout = Vulk::VulkanDescriptorSetLayout(&vulkanLogicalDevice);
 	Vulk::VulkanGraphicPipeLine vulkanGraphicPipeLine = Vulk::VulkanGraphicPipeLine(
 		&vulkanRenderPass, &vulkanLogicalDevice, &vulkanSwapChain, &vulkanDescriptorSetLayout
+	);
+	Vulk::VulkanFrameBuffer vulkanFrameBuffer = Vulk::VulkanFrameBuffer(&vulkanRenderPass, &vulkanLogicalDevice, &vulkanSwapChain, &vulkanImageView);
+	Vulk::VulkanCommandPool vulkanCommandPool = Vulk::VulkanCommandPool(&vulkanLogicalDevice);
+	Vulk::VulkanTextureImage vulkanTextureImage = Vulk::VulkanTextureImage(&vulkanLogicalDevice, &vulkanCommandPool, &vulkanImageView);
+	Vulk::VulkanTextureSampler vulkanTextureSampler = Vulk::VulkanTextureSampler(&vulkanLogicalDevice);
+	Vulk::VulkanVertexBuffer vulkanVertexBuffer = Vulk::VulkanVertexBuffer(&vulkanLogicalDevice, &vulkanImageView, &vulkanCommandPool);
+	Vulk::VulkanIndexBuffer vulkanIndexBuffer = Vulk::VulkanIndexBuffer(&vulkanLogicalDevice, &vulkanImageView, &vulkanCommandPool);
+	Vulk::VulkanUniformBuffer vulkanUniformBuffer = Vulk::VulkanUniformBuffer(&vulkanSwapChain, &vulkanLogicalDevice, &vulkanImageView);
+	Vulk::VulkanDescriptorPool vulkanDescriptorPool = Vulk::VulkanDescriptorPool(&vulkanSwapChain, &vulkanLogicalDevice);
+	Vulk::VulkanDescriptorSet vulkanDescriptorSet = Vulk::VulkanDescriptorSet(
+		&vulkanSwapChain, &vulkanLogicalDevice, &vulkanTextureImage, &vulkanTextureSampler, &vulkanDescriptorPool, &vulkanUniformBuffer
+	);
+	Vulk::VulkanCommandBuffer vulkanCommandBuffer = Vulk::VulkanCommandBuffer(
+		&vulkanDescriptorSet, &vulkanRenderPass, &vulkanFrameBuffer, &vulkanCommandPool, &vulkanGraphicPipeLine, &vulkanVertexBuffer, &vulkanIndexBuffer
 	);
 
 	glfwSetWindowUserPointer(window, &vulkanContext);

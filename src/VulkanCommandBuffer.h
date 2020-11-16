@@ -25,13 +25,13 @@ namespace Vulk {
 		~VulkanCommandBuffer();
 		void CreateCommandBuffers();
 	private:
-		std::vector<VkCommandBuffer> m_CommandBuffers;
-		VulkanDescriptorSet* m_VulkanDescriptorSet;
-		VulkanRenderPass* m_VulkanRenderPass;
-		VulkanFrameBuffer* m_VulkanFrameBuffer;
-		VulkanCommandPool* m_VulkanCommandPool;
-		VulkanGraphicPipeLine* m_VulkanGraphicPipeLine;
-		VulkanVertexBuffer* m_VulkanVertexBuffer;
-		VulkanIndexBuffer* m_VulkanIndexBuffer;
+		VulkanDescriptorSet* m_VulkanDescriptorSet = nullptr;
+		VulkanRenderPass* m_VulkanRenderPass = nullptr;
+		VulkanFrameBuffer* m_VulkanFrameBuffer = nullptr;
+		VulkanCommandPool* m_VulkanCommandPool = nullptr;
+		VulkanGraphicPipeLine* m_VulkanGraphicPipeLine = nullptr;
+		VulkanVertexBuffer* m_VulkanVertexBuffer = nullptr;
+		VulkanIndexBuffer* m_VulkanIndexBuffer = nullptr;
+		std::vector<VkCommandBuffer> m_CommandBuffers = { };
 	};
 }

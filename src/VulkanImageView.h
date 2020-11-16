@@ -17,12 +17,12 @@ namespace Vulk {
 		inline VkImageView GetDepthImageView() { return m_DepthImageView; };
 		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	private:
-		VulkanSwapChain* m_VulkanSwapChain;
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkImageView m_DepthImageView;
-		VkImage m_DepthImage;
-		VkDeviceMemory m_DepthImageMemory;
-		VkImageView m_ImageView;
+		VulkanSwapChain* m_VulkanSwapChain = nullptr;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkImageView m_DepthImageView = VK_NULL_HANDLE;
+		VkImage m_DepthImage = VK_NULL_HANDLE;
+		VkDeviceMemory m_DepthImageMemory = VK_NULL_HANDLE;
+		VkImageView m_ImageView = VK_NULL_HANDLE;
 	private:
 		void CreateDepthResources();
 		//@todo delete duplicate in VulkanRenderPass

@@ -12,6 +12,11 @@ namespace Vulk {
 
 	}
 
+    VulkanDescriptorPool::~VulkanDescriptorPool()
+    {
+
+    }
+
     void VulkanDescriptorPool::CreateDescriptorPool()
     {
         std::array<VkDescriptorPoolSize, 2> poolSizes{};

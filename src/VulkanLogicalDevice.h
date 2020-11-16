@@ -14,7 +14,7 @@ namespace Vulk {
 		inline VkPhysicalDevice GetPhysicalDevice() { return m_VulkanPhysicalDevice->GetPhysicalDevice(); };
 		inline VkQueue GetGraphicsQueue() { return m_GraphicsQueue; };
 	private:
-		VulkanPhysicalDevice* m_VulkanPhysicalDevice;
+		VulkanPhysicalDevice* m_VulkanPhysicalDevice = nullptr;
 		VkDevice m_LogicalDevice = VK_NULL_HANDLE;
 		VkQueue m_GraphicsQueue = VK_NULL_HANDLE;
 		VkQueue m_PresentQueue = VK_NULL_HANDLE;

@@ -17,12 +17,12 @@ namespace Vulk {
 		inline VkImage GetTextureImage() { return m_TextureImage; };
 		VkImageView CreateTextureImageView();
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VulkanCommandPool* m_VulkanCommandPool;
-		VkImage m_TextureImage;
-		VkDeviceMemory m_TextureImageMemory;
-		VulkanImageView* m_VulkanImageView;
-		VkImageView m_TextureImageView;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VulkanCommandPool* m_VulkanCommandPool = nullptr;
+		VulkanImageView* m_VulkanImageView = nullptr;
+		VkImage m_TextureImage = VK_NULL_HANDLE;
+		VkDeviceMemory m_TextureImageMemory = VK_NULL_HANDLE;
+		VkImageView m_TextureImageView = VK_NULL_HANDLE;
 	private:
 		//@todo duplicate in VulkanVertexBuffer
 		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);

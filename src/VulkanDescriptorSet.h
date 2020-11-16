@@ -28,13 +28,13 @@ namespace Vulk {
 		inline std::vector<VkDescriptorSet> GetDescriptorSets() { return m_DescriptorSets; };
 		inline VulkanSwapChain* GetVulkanSwapChain() { return m_VulkanSwapChain; };
 	private:
-		std::vector<VkDescriptorSet> m_DescriptorSets;
-		VulkanSwapChain* m_VulkanSwapChain;
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkDescriptorSetLayout m_DescriptorSetLayout;
-		VulkanTextureImage* m_VulkanTextureImage;
-		VulkanTextureSampler* m_VulkanTextureSampler;
-		VulkanDescriptorPool* m_VulkanDescriptorPool;
-		VulkanUniformBuffer* m_VulkanUniformBuffer;
+		VulkanSwapChain* m_VulkanSwapChain = nullptr;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VulkanTextureImage* m_VulkanTextureImage = nullptr;
+		VulkanTextureSampler* m_VulkanTextureSampler = nullptr;
+		VulkanDescriptorPool* m_VulkanDescriptorPool = nullptr;
+		VulkanUniformBuffer* m_VulkanUniformBuffer = nullptr;
+		std::vector<VkDescriptorSet> m_DescriptorSets = { };
+		VkDescriptorSetLayout m_DescriptorSetLayout = VK_NULL_HANDLE;
 	};
 }

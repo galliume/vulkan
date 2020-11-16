@@ -18,8 +18,8 @@ namespace Vulk {
 		inline std::vector<VkImageView> GetSwapChainImageViews() { return m_SwapChainImageViews; };
 		inline std::vector<VkImage> GetSwapChainImage() { return m_SwapChainImages; };
 	private:
-		VulkanContext* m_VulkanContext;
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
+		VulkanContext* m_VulkanContext = VK_NULL_HANDLE;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
 		VkSwapchainKHR m_SwapChain = VK_NULL_HANDLE;
 		std::vector<VkImage>m_SwapChainImages = { };
 		VkFormat m_SwapChainImageFormat = { };

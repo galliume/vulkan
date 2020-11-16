@@ -15,7 +15,7 @@ namespace Vulk {
 		void CreateCommandPool();
 		VkCommandPool GetCommandPool() { return m_CommandPool; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkCommandPool m_CommandPool;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkCommandPool m_CommandPool = VK_NULL_HANDLE;
 	};
 }

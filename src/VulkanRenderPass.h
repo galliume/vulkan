@@ -13,10 +13,10 @@ namespace Vulk {
 		VulkanLogicalDevice* GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
 		inline VkRenderPass GetRenderPass() { return m_RenderPass; };
 	private:
-		VkRenderPass m_RenderPass;
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
+		VkRenderPass m_RenderPass = VK_NULL_HANDLE;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VulkanSwapChain* m_VulkanSwapChain = nullptr;
 	private:
-		VulkanSwapChain* m_VulkanSwapChain;
 		//@todo delete duplicate in VulkanImageView
 		VkFormat FindDepthFormat();
 		//@todo delete duplicate in VulkanImageView

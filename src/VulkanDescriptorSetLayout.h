@@ -9,8 +9,8 @@ namespace Vulk {
 		~VulkanDescriptorSetLayout();
 		inline VkDescriptorSetLayout* GetDescriptorSetLayout() { return m_DescriptorSetLayout; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice;
-		VkDescriptorSetLayout* m_DescriptorSetLayout;
+		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		VkDescriptorSetLayout* m_DescriptorSetLayout = VK_NULL_HANDLE;
 	private:
 		void CreateDescriptorSetLayout();
 	};
