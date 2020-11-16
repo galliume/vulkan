@@ -1,8 +1,8 @@
 #pragma once
 
-#include "VulkanLogicalDevice.h"
+#include "Log.h"
 
-#include "vulkan/vulkan.h"
+#include "VulkanLogicalDevice.h"
 
 #include <vector>
 
@@ -10,6 +10,7 @@ namespace Vulk {
 	class VulkanCommandPool
 	{
 	public:
+		VulkanCommandPool();
 		VulkanCommandPool(VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanCommandPool();
 		void CreateCommandPool();

@@ -9,6 +9,7 @@ namespace Vulk {
 	class VulkanTextureSampler 
 	{
 	public:
+		VulkanTextureSampler();
 		VulkanTextureSampler(VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanTextureSampler();
 		void CreateTextureSampler();

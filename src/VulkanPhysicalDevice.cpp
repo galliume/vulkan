@@ -1,13 +1,10 @@
 #include "VulkanPhysicalDevice.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
-#include <assert.h>
-#include <set>
-#include <optional>
-
 namespace Vulk {
+
+    VulkanPhysicalDevice::VulkanPhysicalDevice()
+    {
+    }
 
 	VulkanPhysicalDevice::VulkanPhysicalDevice(VulkanContext* vulkanContext)
         : m_VulkanContext(vulkanContext)

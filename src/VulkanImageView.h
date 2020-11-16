@@ -3,18 +3,22 @@
 #include "VulkanLogicalDevice.h"
 #include "VulkanSwapChain.h"
 
+#include "Log.h"
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
 	class VulkanImageView
 	{
 	public:
+		VulkanImageView();
 		VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanImageView();
 		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 		VkImageView CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
 		VkImageView GetImageView() { return m_ImageView; };
 		inline VkImageView GetDepthImageView() { return m_DepthImageView; };
+		inline VkImage GetDepthImage() { return m_DepthImage; };
+		inline VkDeviceMemory GetDepthImageMemory() { return m_DepthImageMemory; };
 		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	private:
 		VulkanSwapChain* m_VulkanSwapChain = nullptr;

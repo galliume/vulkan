@@ -5,9 +5,10 @@
 #include "VulkanCommandPool.h"
 
 #include "vulkan/vulkan.h"
-#include <vector>
+#include "iostream"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+
 #include <array>
 #include <vector>
 
@@ -64,10 +65,12 @@ namespace Vulk {
 	class VulkanVertexBuffer
 	{
 	public:
+		VulkanVertexBuffer();
 		VulkanVertexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool);
 		~VulkanVertexBuffer();
 		void CreateVertexBuffer();
 		inline VkBuffer GetVertexBuffer() { return m_VertexBuffer; };
+		inline VkDeviceMemory GetVertexBufferMemory() { return m_VertexBufferMemory; };
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
 		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;

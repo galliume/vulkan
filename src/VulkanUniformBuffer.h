@@ -5,6 +5,7 @@
 #include "VulkanImageView.h"
 
 #include "vulkan/vulkan.h"
+#include "iostream"
 #include "glm/glm.hpp"
 
 namespace Vulk {
@@ -18,10 +19,12 @@ namespace Vulk {
 	class VulkanUniformBuffer
 	{
 	public:
+		VulkanUniformBuffer();
 		VulkanUniformBuffer(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView);
 		~VulkanUniformBuffer();
 		inline std::vector<VkBuffer> GetUniformBuffers() { return m_UniformBuffers; };
 		inline uint32_t GetSizeOfUniformBufferObject() { return sizeof(UniformBufferObject); };
+		inline std::vector<VkDeviceMemory> GetUniformBuffersMemory() { return m_UniformBuffersMemory; };
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
 		VulkanImageView* m_VulkanImageView = nullptr;

@@ -2,12 +2,14 @@
 #include "VulkanLogicalDevice.h"
 #include "VulkanPhysicalDevice.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 #include <set>
 
 namespace Vulk {
+    VulkanDescriptorSet::VulkanDescriptorSet()
+    {
+
+    }
+
     VulkanDescriptorSet::VulkanDescriptorSet(
         VulkanSwapChain* vulkanSwapChain, 
         VulkanLogicalDevice* vulkanLogicalDevice, 

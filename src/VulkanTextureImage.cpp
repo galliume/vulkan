@@ -1,11 +1,11 @@
 #include "VulkanTextureImage.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
-#include "stb_image.h"
-
 namespace Vulk {
+    VulkanTextureImage::VulkanTextureImage()
+    {
+
+    }
+
 	VulkanTextureImage::VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView)
         : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanCommandPool(vulkanCommandPool), m_VulkanImageView(vulkanImageView)
 	{

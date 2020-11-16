@@ -1,9 +1,11 @@
 #include "VulkanFrameBuffer.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
+    VulkanFrameBuffer::VulkanFrameBuffer()
+    {
+
+    }
+
 	VulkanFrameBuffer::VulkanFrameBuffer(
         VulkanRenderPass* vulkanRenderPass, VulkanLogicalDevice* vulkanLogicalDevice,
         VulkanSwapChain* vulkanSwapChain, VulkanImageView* vulkanImageView

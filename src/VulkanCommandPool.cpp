@@ -1,9 +1,11 @@
 #include "VulkanCommandPool.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
+    VulkanCommandPool::VulkanCommandPool()
+    {
+
+    }
+
 	VulkanCommandPool::VulkanCommandPool(VulkanLogicalDevice* vulkanLogicalDevice)
         :m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{

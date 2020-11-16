@@ -3,7 +3,10 @@
 #include "VulkanLogicalDevice.h"
 #include "VulkanCommandPool.h"
 #include "VulkanImageView.h"
+
+#include "Log.h"
 #include "vulkan/vulkan.h"
+#include "stb_image.h"
 
 #include <vector>
 
@@ -11,11 +14,14 @@ namespace Vulk {
 	class VulkanTextureImage
 	{
 	public:
+		VulkanTextureImage();
 		VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView);
 		~VulkanTextureImage();
 		void CreateTextureImage();
 		inline VkImage GetTextureImage() { return m_TextureImage; };
 		VkImageView CreateTextureImageView();
+		inline VkImageView GetTextureImageView() { return m_TextureImageView; };
+		inline VkDeviceMemory GetTextureImageMemory() { return m_TextureImageMemory; };
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
 		VulkanCommandPool* m_VulkanCommandPool = nullptr;

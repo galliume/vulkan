@@ -4,9 +4,19 @@
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
+#include "Log.h"
+#include "spdlog/spdlog.h"
+#include "spdlog/fmt/ostr.h"
+#include "stb_image.h"
+#include "iostream"
+
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+
+#include <set>
+#include <fstream>
+#include <chrono>
 #include <optional>
 #include <array>
 #include <cstddef>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Log.h"
 #include "vulkan/vulkan.h"
 #include "GLFW/glfw3.h"
 #include <vector>
@@ -7,6 +8,7 @@
 namespace Vulk {
 	class VulkanContext {
 	public:
+		VulkanContext();
 		VulkanContext(GLFWwindow* windowHandle);
 		~VulkanContext();
 

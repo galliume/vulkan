@@ -3,12 +3,14 @@
 #include "VulkanContext.h"
 #include "VulkanLogicalDevice.h"
 
+#include "Log.h"
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
 
 	class VulkanSwapChain {
 	public:
+		VulkanSwapChain();
 		VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanSwapChain();
 		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
@@ -17,6 +19,7 @@ namespace Vulk {
 		inline VkExtent2D GetSwapChainExtent() { return m_SwapChainExtent; };
 		inline std::vector<VkImageView> GetSwapChainImageViews() { return m_SwapChainImageViews; };
 		inline std::vector<VkImage> GetSwapChainImage() { return m_SwapChainImages; };
+		inline VkSwapchainKHR GetSwapChain() { return m_SwapChain; };
 	private:
 		VulkanContext* m_VulkanContext = VK_NULL_HANDLE;
 		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;

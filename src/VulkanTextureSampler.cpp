@@ -1,8 +1,10 @@
 #include "VulkanTextureSampler.h"
 
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
+    VulkanTextureSampler::VulkanTextureSampler()
+    {
+    }
+
 	VulkanTextureSampler::VulkanTextureSampler(VulkanLogicalDevice* vulkanLogicalDevice) : m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 	}

@@ -1,12 +1,15 @@
 #pragma once
 #include "VulkanSwapChain.h"
 #include "VulkanLogicalDevice.h"
+
+#include "Log.h"
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
 	class VulkanRenderPass
 	{
 	public:
+		VulkanRenderPass::VulkanRenderPass();
 		VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanRenderPass();
 		void CreateRenderPass();

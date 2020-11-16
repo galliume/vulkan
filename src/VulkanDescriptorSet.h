@@ -7,6 +7,7 @@
 #include "VulkanDescriptorPool.h"
 #include "VulkanUniformBuffer.h"
 
+#include "Log.h"
 #include "vulkan/vulkan.h"
 #include <vector>
 
@@ -15,6 +16,7 @@ namespace Vulk {
 	class VulkanDescriptorSet
 	{
 	public:
+		VulkanDescriptorSet();
 		VulkanDescriptorSet(
 			VulkanSwapChain* vulkanSwapChain,
 			VulkanLogicalDevice* vulkanLogicalDevice,

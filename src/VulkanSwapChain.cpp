@@ -1,10 +1,10 @@
 #include "VulkanSwapChain.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-#include "GLFW/glfw3.h"
-
 namespace Vulk {
+    VulkanSwapChain::VulkanSwapChain()
+    {
+    }
+
 	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice)
         : m_VulkanContext(vulkanContext), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{

@@ -1,11 +1,13 @@
 #include "VulkanDescriptorPool.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 #include <set>
 
 namespace Vulk {
+    VulkanDescriptorPool::VulkanDescriptorPool()
+    {
+
+    }
+
 	VulkanDescriptorPool::VulkanDescriptorPool(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{

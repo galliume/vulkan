@@ -1,9 +1,11 @@
 #include "VulkanCommandBuffer.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
+    VulkanCommandBuffer::VulkanCommandBuffer()
+    {
+
+    }
+
     VulkanCommandBuffer::VulkanCommandBuffer(
         VulkanDescriptorSet* vulkanDescriptorSet, VulkanRenderPass* vulkanRenderPass,
         VulkanFrameBuffer* vulkanFrameBuffer, VulkanCommandPool* vulkanCommandPool,

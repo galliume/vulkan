@@ -75,6 +75,9 @@
     <ClInclude Include="src\VulkanRenderPass.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\VulkanService.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\VulkanSwapChain.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -1365,6 +1368,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\VulkanRenderPass.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\VulkanService.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\VulkanSwapChain.cpp">

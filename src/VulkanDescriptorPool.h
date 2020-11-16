@@ -3,6 +3,7 @@
 #include "VulkanSwapChain.h"
 #include "VulkanLogicalDevice.h"
 
+#include "Log.h"
 #include "vulkan/vulkan.h"
 
 namespace Vulk {
@@ -10,6 +11,7 @@ namespace Vulk {
 	class VulkanDescriptorPool
 	{
 	public:
+		VulkanDescriptorPool();
 		VulkanDescriptorPool(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
 		~VulkanDescriptorPool();
 		void CreateDescriptorPool();

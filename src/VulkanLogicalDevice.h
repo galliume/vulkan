@@ -1,11 +1,16 @@
 #pragma once
 
 #include "VulkanPhysicalDevice.h"
+
+#include "Log.h"
 #include "vulkan/vulkan.h"
+
+#include <set>
 
 namespace Vulk {
 	class VulkanLogicalDevice {
 	public:
+		VulkanLogicalDevice();
 		VulkanLogicalDevice(VulkanPhysicalDevice* vulkanPhysicalDevice);
 		~VulkanLogicalDevice();
 		void CreateLogicalDevice();

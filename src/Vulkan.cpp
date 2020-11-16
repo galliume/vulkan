@@ -1,19 +1,4 @@
 #include "Vulkan.h"
-#include "Log.h"
-
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/ostr.h"
-
-#define GLM_FORCE_RADIANS
-#include "glm/gtc/matrix_transform.hpp"
-#include "stb_image.h"
-
-#include <set>
-#include <fstream>
-#include <chrono>
-#include "iostream"
-
-
 #include "VulkanContext.h"
 #include "VulkanPhysicalDevice.h"
 
@@ -51,15 +36,6 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityF
     }
 
     return VK_FALSE;
-}
-
-
-void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback, const VkAllocationCallbacks* pAllocator) 
-{
-    auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-    if (func != nullptr) {
-        func(instance, callback, pAllocator);
-    }
 }
 
 Vulkan* Vulkan::s_Instance = nullptr;

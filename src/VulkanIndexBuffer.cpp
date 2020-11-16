@@ -1,9 +1,10 @@
 #include "VulkanIndexBuffer.h"
 
-#include "vulkan/vulkan.h"
-#include "iostream"
-
 namespace Vulk {
+    VulkanIndexBuffer::VulkanIndexBuffer()
+    {
+    }
+
     VulkanIndexBuffer::VulkanIndexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool)
         : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView), m_VulkanCommandPool(vulkanCommandPool)
     {

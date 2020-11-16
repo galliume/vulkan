@@ -1,9 +1,10 @@
 #include "VulkanVertexBuffer.h"
 
-#include "vulkan/vulkan.h"
-#include "iostream"
-
 namespace Vulk {
+    VulkanVertexBuffer::VulkanVertexBuffer()
+    {
+    }
+
 	VulkanVertexBuffer::VulkanVertexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool)
         : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView), m_VulkanCommandPool(vulkanCommandPool)
 	{

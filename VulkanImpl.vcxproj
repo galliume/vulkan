@@ -142,6 +142,7 @@
     <ClInclude Include="src\VulkanLogicalDevice.h" />
     <ClInclude Include="src\VulkanPhysicalDevice.h" />
     <ClInclude Include="src\VulkanRenderPass.h" />
+    <ClInclude Include="src\VulkanService.h" />
     <ClInclude Include="src\VulkanSwapChain.h" />
     <ClInclude Include="src\VulkanTextureImage.h" />
     <ClInclude Include="src\VulkanTextureSampler.h" />
@@ -574,6 +575,7 @@
     <ClCompile Include="src\VulkanLogicalDevice.cpp" />
     <ClCompile Include="src\VulkanPhysicalDevice.cpp" />
     <ClCompile Include="src\VulkanRenderPass.cpp" />
+    <ClCompile Include="src\VulkanService.cpp" />
     <ClCompile Include="src\VulkanSwapChain.cpp" />
     <ClCompile Include="src\VulkanTextureImage.cpp" />
     <ClCompile Include="src\VulkanTextureSampler.cpp" />
@@ -589,4 +591,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+</Project> 

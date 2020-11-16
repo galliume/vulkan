@@ -13,9 +13,10 @@ namespace Vulk {
 	class VulkanCommandBuffer
 	{
 	public:
+		VulkanCommandBuffer();
 		VulkanCommandBuffer(
-			VulkanDescriptorSet* vulkanDescriptorSet, 
-			VulkanRenderPass* vulkanRenderPass, 
+			VulkanDescriptorSet* vulkanDescriptorSet,
+			VulkanRenderPass* vulkanRenderPass,
 			VulkanFrameBuffer* vulkanFrameBuffer,
 			VulkanCommandPool* vulkanCommandPool,
 			VulkanGraphicPipeLine* vulkanGraphicPipeLine,
@@ -24,6 +25,7 @@ namespace Vulk {
 		);
 		~VulkanCommandBuffer();
 		void CreateCommandBuffers();
+		inline std::vector<VkCommandBuffer> GetCommandBuffers() { return m_CommandBuffers; }
 	private:
 		VulkanDescriptorSet* m_VulkanDescriptorSet = nullptr;
 		VulkanRenderPass* m_VulkanRenderPass = nullptr;

@@ -1,7 +1,12 @@
 #pragma once
 
 #include "VulkanContext.h"
+
+#include "Log.h"
 #include "vulkan/vulkan.h"
+
+#include <assert.h>
+#include <set>
 #include <optional>
 #include <vector>
 
@@ -24,6 +29,7 @@ namespace Vulk {
 	class VulkanPhysicalDevice
 	{
 	public:
+		VulkanPhysicalDevice();
 		VulkanPhysicalDevice(VulkanContext* vulkanContext);
 		~VulkanPhysicalDevice();
 		inline QueueFamilyIndices GetQueueFamilyIndices() { return m_QueueFamilyIndices; };

@@ -1,10 +1,11 @@
 #include "VulkanImageView.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
     
+    VulkanImageView::VulkanImageView()
+    {
+    }
+
     VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
     {

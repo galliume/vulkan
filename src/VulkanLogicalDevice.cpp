@@ -1,12 +1,11 @@
 #include "VulkanLogicalDevice.h"
 #include "VulkanPhysicalDevice.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
-#include <set>
-
 namespace Vulk {
+    VulkanLogicalDevice::VulkanLogicalDevice()
+    {
+
+    }
     VulkanLogicalDevice::VulkanLogicalDevice(VulkanPhysicalDevice* vulkanPhysicalDevice)
         : m_VulkanPhysicalDevice(vulkanPhysicalDevice)
 	{

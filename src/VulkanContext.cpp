@@ -1,61 +1,49 @@
 #include "VulkanContext.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
-#include <assert.h>
-
 namespace Vulk {
 
-    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback)
-    {
-        auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-        if (func != nullptr) {
-            return func(instance, pCreateInfo, pAllocator, pCallback);
-        } else {
-            return VK_ERROR_EXTENSION_NOT_PRESENT;
-        }
-    }
-
+    //Move in VulkUtils ? 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
     {
         switch (messageSeverity) {
-            case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT: {
-                VULK_CRITICAL(pCallbackData->pMessage);
-                break;
-            }
-            case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT: {
-                VULK_WARN(pCallbackData->pMessage);
-                break;
-            }
-            default: {
-                VULK_TRACE(pCallbackData->pMessage);
-            }
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT: {
+            VULK_CRITICAL(pCallbackData->pMessage);
+            break;
+        }
+        case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT: {
+            VULK_WARN(pCallbackData->pMessage);
+            break;
+        }
+        default: {
+            VULK_TRACE(pCallbackData->pMessage);
+        }
         }
         return VK_FALSE;
     }
 
-	VulkanContext::VulkanContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle) 
-	{
+    VulkanContext::VulkanContext()
+    {
+    };
+
+    VulkanContext::VulkanContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
+    {
         Create();
-	};
+    };
 
-	VulkanContext::~VulkanContext() 
-	{
+    VulkanContext::~VulkanContext()
+    {
 
-	}
+    }
 
-	void VulkanContext::Create() 
-	{		
-		assert(glfwVulkanSupported(), VULK_CRITIAL("GLFW must support Vulkan."));
-
-		VkApplicationInfo appInfo{};
-		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-		appInfo.pApplicationName = "Vulkan impl";
-		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.pEngineName = "VulkanImpl";
-		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.apiVersion = VK_API_VERSION_1_2;
+    void VulkanContext::Create()
+    {
+        VkApplicationInfo appInfo{};
+        appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+        appInfo.pApplicationName = "Vulkan impl";
+        appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.pEngineName = "VulkanImpl";
+        appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+        appInfo.apiVersion = VK_API_VERSION_1_2;
 
 #ifdef EnableValidationLayers
         if (!CheckValidationLayerSupport()) {
@@ -85,13 +73,13 @@ namespace Vulk {
 
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
 #ifdef EnableValidationLayers
-            createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
-            createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
-            PopulateDebugMessengerCreateInfo(debugCreateInfo);
-            createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
+        createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
+        createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
+        PopulateDebugMessengerCreateInfo(debugCreateInfo);
+        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 #else
-            createInfo.enabledLayerCount = 0;
-            createInfo.pNext = nullptr;
+        createInfo.enabledLayerCount = 0;
+        createInfo.pNext = nullptr;
 #endif
 
         if (vkCreateInstance(&createInfo, nullptr, &m_VkInstance) != VK_SUCCESS) {
@@ -103,12 +91,12 @@ namespace Vulk {
         }
 
         VULK_TRACE("VulkanContext created (instance and surface)");
-	}
+    }
 
-	void VulkanContext::SwapBuffers() 
-	{
+    void VulkanContext::SwapBuffers()
+    {
 
-	}
+    }
 
     bool VulkanContext::CheckValidationLayerSupport()
     {
@@ -145,7 +133,7 @@ namespace Vulk {
         std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 
 #ifdef EnableValidationLayers
-            extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
+        extensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
 #endif
 
         return extensions;

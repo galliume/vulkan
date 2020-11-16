@@ -1,9 +1,11 @@
 #include "VulkanDescriptorSetLayout.h"
 
-#include "Log.h"
-#include "vulkan/vulkan.h"
-
 namespace Vulk {
+    VulkanDescriptorSetLayout::VulkanDescriptorSetLayout()
+    {
+
+    }
+
 	VulkanDescriptorSetLayout::VulkanDescriptorSetLayout(VulkanLogicalDevice* vulkanLogicalDevice)
         : m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{

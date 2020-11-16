@@ -4,13 +4,17 @@
 #include "VulkanLogicalDevice.h"
 #include "VulkanSwapChain.h"
 #include "VulkanImageView.h"
+
+#include "Log.h"
 #include "vulkan/vulkan.h"
+
 #include <vector>
 
 namespace Vulk {
 	class VulkanFrameBuffer
 	{
 	public:
+		VulkanFrameBuffer();
 		VulkanFrameBuffer(VulkanRenderPass* vulkanRenderPass, VulkanLogicalDevice* vulkanLogicalDevice, VulkanSwapChain* vulkanSwapChain, VulkanImageView* vulkanImageView);
 		~VulkanFrameBuffer();
 		void CreateFramebuffers();

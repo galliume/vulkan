@@ -5,7 +5,7 @@
 #include "VulkanCommandPool.h"
 
 #include "vulkan/vulkan.h"
-
+#include "iostream"
 
 namespace Vulk {
 
@@ -17,10 +17,12 @@ namespace Vulk {
 	class VulkanIndexBuffer
 	{
 	public:
+		VulkanIndexBuffer();
 		VulkanIndexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool);
 		~VulkanIndexBuffer();
 		void CreateIndexBuffer();
 		inline VkBuffer GetIndexBuffer() { return m_IndexBuffer; };
+		inline VkDeviceMemory GetIndexBufferMemory() { return m_IndexBufferMemory; };
 	private:
 		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
 		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;

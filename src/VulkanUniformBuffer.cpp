@@ -1,9 +1,10 @@
 #include "VulkanUniformBuffer.h"
 
-#include "vulkan/vulkan.h"
-#include "iostream"
-
 namespace Vulk {
+    VulkanUniformBuffer::VulkanUniformBuffer()
+    {
+    }
+
     VulkanUniformBuffer::VulkanUniformBuffer(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView) 
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView)
     {
