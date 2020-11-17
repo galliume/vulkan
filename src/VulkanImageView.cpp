@@ -1,15 +1,22 @@
 #include "VulkanImageView.h"
 
 namespace Vulk {
-    
-    VulkanImageView::VulkanImageView()
-    {
-    }
-
-    VulkanImageView::VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
+   
+    VulkanImageView::VulkanImageView(std::shared_ptr<VulkanSwapChain> vulkanSwapChain, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice)
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
     {
-
+        
+        VULK_INFO(m_VulkanSwapChain->GetSwapChainImage().size());
+        m_VulkanSwapChain->GetSwapChainImageViews().resize(m_VulkanSwapChain->GetSwapChainImage().size());
+        VULK_INFO(m_VulkanSwapChain->GetSwapChainImageViews().size());
+        for (uint32_t i = 0; i < m_VulkanSwapChain->GetSwapChainImage().size(); i++)
+        {
+            m_VulkanSwapChain->GetSwapChainImageViews()[i] = CreateImageView(
+                m_VulkanSwapChain->GetSwapChainImage()[i], 
+                m_VulkanSwapChain->GetSwapChainImageFormat(),
+                VK_IMAGE_ASPECT_COLOR_BIT
+            );
+        }
     }
 
     VulkanImageView::~VulkanImageView()
@@ -32,7 +39,7 @@ namespace Vulk {
 
         if (vkCreateImageView(m_VulkanLogicalDevice->GetDevice(), &viewInfo, nullptr, &m_ImageView) != VK_SUCCESS)
         {
-            throw std::runtime_error("failed to create texture image view!");
+            VULK_CRITICAL("failed to create texture image view!");
         }
 
         return m_ImageView;

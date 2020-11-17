@@ -8,7 +8,6 @@
 namespace Vulk {
 	class VulkanContext {
 	public:
-		VulkanContext();
 		VulkanContext(GLFWwindow* windowHandle);
 		~VulkanContext();
 

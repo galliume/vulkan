@@ -1,11 +1,12 @@
 #include "VulkanUniformBuffer.h"
 
 namespace Vulk {
-    VulkanUniformBuffer::VulkanUniformBuffer()
-    {
-    }
-
-    VulkanUniformBuffer::VulkanUniformBuffer(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView) 
+    
+    VulkanUniformBuffer::VulkanUniformBuffer(
+        std::shared_ptr<VulkanSwapChain> vulkanSwapChain,
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+        std::shared_ptr<VulkanImageView> vulkanImageView
+    ) 
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView)
     {
     }

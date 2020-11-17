@@ -7,12 +7,11 @@
 namespace Vulk {
 	class VulkanDescriptorSetLayout {
 	public:
-		VulkanDescriptorSetLayout();
-		VulkanDescriptorSetLayout(VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanDescriptorSetLayout(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice);
 		~VulkanDescriptorSetLayout();
 		inline VkDescriptorSetLayout* GetDescriptorSetLayout() { return m_DescriptorSetLayout; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		VkDescriptorSetLayout* m_DescriptorSetLayout = VK_NULL_HANDLE;
 	private:
 		void CreateDescriptorSetLayout();

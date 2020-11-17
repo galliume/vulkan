@@ -26,6 +26,7 @@
 
 #include <vector>
 #include <chrono>
+#include <memory>
 
 #define EnableValidationLayers true;
 const int MAX_FRAMES_IN_FLIGHT = 2;
@@ -38,7 +39,7 @@ namespace Vulk
 		VulkanService(GLFWwindow* window);
 		~VulkanService();
 		void VulkanService::Init();
-		VulkanContext GetContext() { return m_VulkanContext; };
+		std::shared_ptr<VulkanContext> GetContext() { return m_VulkanContext; };
 		void CreateSyncObjects();
 		void DrawFrame();
 		void CleanUp();
@@ -47,24 +48,24 @@ namespace Vulk
 		void UpdateUniformBuffer(uint32_t currentImage);
 	private:
 		GLFWwindow* m_Window;
-		VulkanContext m_VulkanContext;
-		VulkanPhysicalDevice m_VulkanPhysicalDevice;
-		VulkanLogicalDevice m_VulkanLogicalDevice;
-		VulkanSwapChain m_VulkanSwapChain;
-		VulkanImageView m_VulkanImageView;
-		VulkanRenderPass m_VulkanRenderPass;
-		VulkanDescriptorSetLayout m_VulkanDescriptorSetLayout;
-		VulkanGraphicPipeLine m_VulkanGraphicPipeLine;
-		VulkanFrameBuffer m_VulkanFrameBuffer;
-		VulkanCommandPool m_VulkanCommandPool;
-		VulkanTextureImage m_VulkanTextureImage;
-		VulkanTextureSampler m_VulkanTextureSampler;
-		VulkanVertexBuffer m_VulkanVertexBuffer;
-		VulkanIndexBuffer m_VulkanIndexBuffer;
-		VulkanUniformBuffer m_VulkanUniformBuffer;
-		VulkanDescriptorPool m_VulkanDescriptorPool;
-		VulkanDescriptorSet m_VulkanDescriptorSet;
-		VulkanCommandBuffer m_VulkanCommandBuffer;
+		std::shared_ptr<VulkanContext> m_VulkanContext;
+		std::shared_ptr<VulkanPhysicalDevice> m_VulkanPhysicalDevice;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice;
+		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain;
+		std::shared_ptr<VulkanImageView> m_VulkanImageView;
+		std::shared_ptr<VulkanRenderPass> m_VulkanRenderPass;
+		std::shared_ptr<VulkanDescriptorSetLayout> m_VulkanDescriptorSetLayout;
+		std::shared_ptr<VulkanGraphicPipeLine> m_VulkanGraphicPipeLine;
+		std::shared_ptr<VulkanFrameBuffer> m_VulkanFrameBuffer;
+		std::shared_ptr<VulkanCommandPool> m_VulkanCommandPool;
+		std::shared_ptr<VulkanTextureImage> m_VulkanTextureImage;
+		std::shared_ptr<VulkanTextureSampler> m_VulkanTextureSampler;
+		std::shared_ptr<VulkanVertexBuffer> m_VulkanVertexBuffer;
+		std::shared_ptr<VulkanIndexBuffer> m_VulkanIndexBuffer;
+		std::shared_ptr<VulkanUniformBuffer> m_VulkanUniformBuffer;
+		std::shared_ptr<VulkanDescriptorPool> m_VulkanDescriptorPool;
+		std::shared_ptr<VulkanDescriptorSet> m_VulkanDescriptorSet;
+		std::shared_ptr<VulkanCommandBuffer> m_VulkanCommandBuffer;
 
 		std::vector<VkSemaphore> m_ImageAvailableSemaphores;
 		std::vector<VkSemaphore> m_RenderFinishedSemaphores;

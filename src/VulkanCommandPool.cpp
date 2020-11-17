@@ -1,12 +1,7 @@
 #include "VulkanCommandPool.h"
 
 namespace Vulk {
-    VulkanCommandPool::VulkanCommandPool()
-    {
-
-    }
-
-	VulkanCommandPool::VulkanCommandPool(VulkanLogicalDevice* vulkanLogicalDevice)
+	VulkanCommandPool::VulkanCommandPool(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice)
         :m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 

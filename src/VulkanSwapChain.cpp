@@ -1,14 +1,11 @@
 #include "VulkanSwapChain.h"
 
 namespace Vulk {
-    VulkanSwapChain::VulkanSwapChain()
-    {
-    }
-
-	VulkanSwapChain::VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice)
+   
+	VulkanSwapChain::VulkanSwapChain(std::shared_ptr<VulkanContext> vulkanContext, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice)
         : m_VulkanContext(vulkanContext), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
-
+        CreateSwapChain();
 	}
 
 	VulkanSwapChain::~VulkanSwapChain()
@@ -72,6 +69,8 @@ namespace Vulk {
         vkGetSwapchainImagesKHR(m_VulkanLogicalDevice->GetDevice(), m_SwapChain, &imageCount, m_SwapChainImages.data());
         m_SwapChainImageFormat = surfaceFormat.format;
         m_SwapChainExtent = extent;
+
+        VULK_TRACE("Swap chain created");
     }
 
     SwapChainSupportDetails VulkanSwapChain::QuerySwapChainSupport(VkPhysicalDevice device)

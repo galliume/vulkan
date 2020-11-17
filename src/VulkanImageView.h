@@ -10,8 +10,9 @@ namespace Vulk {
 	class VulkanImageView
 	{
 	public:
-		VulkanImageView();
-		VulkanImageView(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanImageView(
+			std::shared_ptr<VulkanSwapChain> vulkanSwapChain, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice
+		);
 		~VulkanImageView();
 		void CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
 		VkImageView CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags);
@@ -21,8 +22,8 @@ namespace Vulk {
 		inline VkDeviceMemory GetDepthImageMemory() { return m_DepthImageMemory; };
 		uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 	private:
-		VulkanSwapChain* m_VulkanSwapChain = nullptr;
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanSwapChain>m_VulkanSwapChain = nullptr;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		VkImageView m_DepthImageView = VK_NULL_HANDLE;
 		VkImage m_DepthImage = VK_NULL_HANDLE;
 		VkDeviceMemory m_DepthImageMemory = VK_NULL_HANDLE;

@@ -1,11 +1,8 @@
 #include "VulkanTextureSampler.h"
 
 namespace Vulk {
-    VulkanTextureSampler::VulkanTextureSampler()
-    {
-    }
-
-	VulkanTextureSampler::VulkanTextureSampler(VulkanLogicalDevice* vulkanLogicalDevice) : m_VulkanLogicalDevice(vulkanLogicalDevice)
+ 
+	VulkanTextureSampler::VulkanTextureSampler(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice) : m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 	}
 

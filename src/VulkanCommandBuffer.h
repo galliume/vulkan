@@ -13,27 +13,23 @@ namespace Vulk {
 	class VulkanCommandBuffer
 	{
 	public:
-		VulkanCommandBuffer();
 		VulkanCommandBuffer(
-			VulkanDescriptorSet* vulkanDescriptorSet,
-			VulkanRenderPass* vulkanRenderPass,
-			VulkanFrameBuffer* vulkanFrameBuffer,
-			VulkanCommandPool* vulkanCommandPool,
-			VulkanGraphicPipeLine* vulkanGraphicPipeLine,
-			VulkanVertexBuffer* vulkanVertexBuffer,
-			VulkanIndexBuffer* vulkanIndexBuffer
+			std::shared_ptr<VulkanDescriptorSet> vulkanDescriptorSet, std::shared_ptr<VulkanRenderPass> vulkanRenderPass,
+			std::shared_ptr<VulkanFrameBuffer> vulkanFrameBuffer, std::shared_ptr<VulkanCommandPool> vulkanCommandPool,
+			std::shared_ptr<VulkanGraphicPipeLine> vulkanGraphicPipeLine, std::shared_ptr<VulkanVertexBuffer> vulkanVertexBuffer,
+			std::shared_ptr<VulkanIndexBuffer> vulkanIndexBuffer
 		);
 		~VulkanCommandBuffer();
 		void CreateCommandBuffers();
 		inline std::vector<VkCommandBuffer> GetCommandBuffers() { return m_CommandBuffers; }
 	private:
-		VulkanDescriptorSet* m_VulkanDescriptorSet = nullptr;
-		VulkanRenderPass* m_VulkanRenderPass = nullptr;
-		VulkanFrameBuffer* m_VulkanFrameBuffer = nullptr;
-		VulkanCommandPool* m_VulkanCommandPool = nullptr;
-		VulkanGraphicPipeLine* m_VulkanGraphicPipeLine = nullptr;
-		VulkanVertexBuffer* m_VulkanVertexBuffer = nullptr;
-		VulkanIndexBuffer* m_VulkanIndexBuffer = nullptr;
+		std::shared_ptr<VulkanDescriptorSet> m_VulkanDescriptorSet = nullptr;
+		std::shared_ptr<VulkanRenderPass> m_VulkanRenderPass = nullptr;
+		std::shared_ptr<VulkanFrameBuffer> m_VulkanFrameBuffer = nullptr;
+		std::shared_ptr<VulkanCommandPool> m_VulkanCommandPool = nullptr;
+		std::shared_ptr<VulkanGraphicPipeLine> m_VulkanGraphicPipeLine = nullptr;
+		std::shared_ptr<VulkanVertexBuffer> m_VulkanVertexBuffer = nullptr;
+		std::shared_ptr<VulkanIndexBuffer> m_VulkanIndexBuffer = nullptr;
 		std::vector<VkCommandBuffer> m_CommandBuffers = { };
 	};
 }

@@ -19,16 +19,11 @@ namespace Vulk {
         return buffer;
     }
 
-    VulkanGraphicPipeLine::VulkanGraphicPipeLine()
-    {
-
-    }
-
     VulkanGraphicPipeLine::VulkanGraphicPipeLine(
-        VulkanRenderPass* vulkanRenderPass,
-        VulkanLogicalDevice* vulkanLogicalDevice,
-        VulkanSwapChain* vulkanSwapChain, 
-        VulkanDescriptorSetLayout* vulkanDescriptorSetLayout
+        std::shared_ptr<VulkanRenderPass> vulkanRenderPass,
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+        std::shared_ptr<VulkanSwapChain> vulkanSwapChain, 
+        std::shared_ptr<VulkanDescriptorSetLayout> vulkanDescriptorSetLayout
     )
         : m_VulkanRenderPass(vulkanRenderPass), m_VulkanLogicalDevice(vulkanLogicalDevice),
         m_VulkanSwapChain(vulkanSwapChain), m_VulkanDescriptorSetLayout(vulkanDescriptorSetLayout)
@@ -156,7 +151,7 @@ namespace Vulk {
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
         pipelineLayoutInfo.setLayoutCount = 1;
-        pipelineLayoutInfo.pSetLayouts = &*m_VulkanDescriptorSetLayout->GetDescriptorSetLayout();
+        pipelineLayoutInfo.pSetLayouts = m_VulkanDescriptorSetLayout->GetDescriptorSetLayout();
 
 
         if (vkCreatePipelineLayout(m_VulkanLogicalDevice->GetDevice(), &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS)

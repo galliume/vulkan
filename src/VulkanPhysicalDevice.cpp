@@ -2,14 +2,10 @@
 
 namespace Vulk {
 
-    VulkanPhysicalDevice::VulkanPhysicalDevice()
-    {
-    }
-
-	VulkanPhysicalDevice::VulkanPhysicalDevice(VulkanContext* vulkanContext)
+	VulkanPhysicalDevice::VulkanPhysicalDevice(std::shared_ptr<VulkanContext> vulkanContext)
         : m_VulkanContext(vulkanContext)
 	{
-
+        PickPhysicalDevice();
 	}
 
 	VulkanPhysicalDevice::~VulkanPhysicalDevice()
@@ -24,7 +20,7 @@ namespace Vulk {
 
         if (deviceCount == 0)
         {
-            throw std::runtime_error("No compatible GPU found");
+            VULK_CRITICAL("No compatible GPU found");
         }
 
         std::vector<VkPhysicalDevice> devices(deviceCount);
@@ -38,8 +34,10 @@ namespace Vulk {
         }
 
         if (m_PhysicalDevice == VK_NULL_HANDLE) {
-            throw std::runtime_error("No GPU can run this program");
+            VULK_CRITICAL("No GPU can run this program");
         }
+
+        VULK_TRACE("Picked physical device");
     }
 
     bool VulkanPhysicalDevice::IsDeviceSuitable(VkPhysicalDevice device)

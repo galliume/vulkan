@@ -1,14 +1,9 @@
 #include "VulkanFrameBuffer.h"
 
 namespace Vulk {
-    VulkanFrameBuffer::VulkanFrameBuffer()
-    {
-
-    }
-
 	VulkanFrameBuffer::VulkanFrameBuffer(
-        VulkanRenderPass* vulkanRenderPass, VulkanLogicalDevice* vulkanLogicalDevice,
-        VulkanSwapChain* vulkanSwapChain, VulkanImageView* vulkanImageView
+        std::shared_ptr<VulkanRenderPass> vulkanRenderPass, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+        std::shared_ptr<VulkanSwapChain> vulkanSwapChain, std::shared_ptr<VulkanImageView> vulkanImageView
     )
         :m_VulkanRenderPass(vulkanRenderPass), m_VulkanLogicalDevice(vulkanLogicalDevice),
         m_VulkanSwapChain(vulkanSwapChain), m_VulkanImageView(vulkanImageView)

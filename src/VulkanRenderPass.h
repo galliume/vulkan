@@ -9,16 +9,18 @@ namespace Vulk {
 	class VulkanRenderPass
 	{
 	public:
-		VulkanRenderPass::VulkanRenderPass();
-		VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanRenderPass(
+			std::shared_ptr<VulkanSwapChain> vulkanSwapChain,
+			std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice
+		);
 		~VulkanRenderPass();
 		void CreateRenderPass();
-		VulkanLogicalDevice* GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
+		inline std::shared_ptr<VulkanLogicalDevice> GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
 		inline VkRenderPass GetRenderPass() { return m_RenderPass; };
 	private:
+		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		VkRenderPass m_RenderPass = VK_NULL_HANDLE;
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
-		VulkanSwapChain* m_VulkanSwapChain = nullptr;
 	private:
 		//@todo delete duplicate in VulkanImageView
 		VkFormat FindDepthFormat();

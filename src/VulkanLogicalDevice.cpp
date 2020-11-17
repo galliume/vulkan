@@ -2,14 +2,10 @@
 #include "VulkanPhysicalDevice.h"
 
 namespace Vulk {
-    VulkanLogicalDevice::VulkanLogicalDevice()
-    {
-
-    }
-    VulkanLogicalDevice::VulkanLogicalDevice(VulkanPhysicalDevice* vulkanPhysicalDevice)
+    VulkanLogicalDevice::VulkanLogicalDevice(std::shared_ptr<VulkanPhysicalDevice> vulkanPhysicalDevice)
         : m_VulkanPhysicalDevice(vulkanPhysicalDevice)
 	{
-
+        CreateLogicalDevice();
 	}
 
 	VulkanLogicalDevice::~VulkanLogicalDevice()
@@ -44,22 +40,20 @@ namespace Vulk {
         createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
         createInfo.pQueueCreateInfos = queueCreateInfos.data();
         createInfo.enabledExtensionCount = static_cast<uint32_t>(m_VulkanPhysicalDevice->GetDeviceExtensions().size());
-        createInfo.ppEnabledExtensionNames = m_VulkanPhysicalDevice->GetDeviceExtensions().data();
+        createInfo.ppEnabledExtensionNames = m_DeviceExtensions2.data();
         createInfo.pEnabledFeatures = &deviceFeatures;
 
-#ifdef EnableValidationLayers
-        createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-        createInfo.ppEnabledLayerNames = validationLayers.data();
-#else
-        createInfo.enabledLayerCount = 0;
-#endif
+        createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
+        createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
 
         if (vkCreateDevice(m_VulkanPhysicalDevice->GetPhysicalDevice(), &createInfo, nullptr, &m_LogicalDevice) != VK_SUCCESS)
         {
-            throw std::runtime_error("Can't create logical device");
+            VULK_CRITICAL("Can't create logical device");
         }
-
+        
         vkGetDeviceQueue(m_LogicalDevice, indices.graphicsFamily.value(), 0, &m_GraphicsQueue);
         vkGetDeviceQueue(m_LogicalDevice, indices.presentFamily.value(), 0, &m_PresentQueue);
+
+        VULK_TRACE("Created logical device");
     }
 }

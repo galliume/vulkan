@@ -3,12 +3,7 @@
 #include <set>
 
 namespace Vulk {
-    VulkanDescriptorPool::VulkanDescriptorPool()
-    {
-
-    }
-
-	VulkanDescriptorPool::VulkanDescriptorPool(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
+	VulkanDescriptorPool::VulkanDescriptorPool(std::shared_ptr<VulkanSwapChain> vulkanSwapChain, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice)
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 

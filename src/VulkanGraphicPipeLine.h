@@ -20,23 +20,22 @@ namespace Vulk {
 
 	class VulkanGraphicPipeLine {
 	public:
-		VulkanGraphicPipeLine();
 		VulkanGraphicPipeLine(
-			VulkanRenderPass* vulkanRenderPass,
-			VulkanLogicalDevice* vulkanLogicalDevice,
-			VulkanSwapChain* vulkanSwapChain,
-			VulkanDescriptorSetLayout* vulkanDescriptorSetLayout
+			std::shared_ptr<VulkanRenderPass> vulkanRenderPass,
+			std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+			std::shared_ptr<VulkanSwapChain> vulkanSwapChain,
+			std::shared_ptr<VulkanDescriptorSetLayout> vulkanDescriptorSetLayout
 		);
 		~VulkanGraphicPipeLine();
 		inline VkPipeline GetGraphicsPipeline() { return m_GraphicsPipeline; };
 		inline VkPipelineLayout GetPipelineLayout() { return m_PipelineLayout; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
-		VulkanRenderPass* m_VulkanRenderPass = VK_NULL_HANDLE;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanRenderPass> m_VulkanRenderPass = VK_NULL_HANDLE;
+		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
+		std::shared_ptr<VulkanDescriptorSetLayout> m_VulkanDescriptorSetLayout = nullptr;
 		VkPipeline m_GraphicsPipeline = VK_NULL_HANDLE;
 		VkPipelineLayout m_PipelineLayout = VK_NULL_HANDLE;
-		VulkanSwapChain* m_VulkanSwapChain = VK_NULL_HANDLE;
-		VulkanDescriptorSetLayout* m_VulkanDescriptorSetLayout = VK_NULL_HANDLE;
 	private:
 		void CreateGraphicsPipeline();
 		VkShaderModule CreateShaderModule(const std::vector<char>& code);

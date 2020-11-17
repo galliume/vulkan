@@ -1,12 +1,7 @@
 #include "VulkanDescriptorSetLayout.h"
 
 namespace Vulk {
-    VulkanDescriptorSetLayout::VulkanDescriptorSetLayout()
-    {
-
-    }
-
-	VulkanDescriptorSetLayout::VulkanDescriptorSetLayout(VulkanLogicalDevice* vulkanLogicalDevice)
+	VulkanDescriptorSetLayout::VulkanDescriptorSetLayout(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice)
         : m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 

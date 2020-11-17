@@ -1,16 +1,11 @@
 #include "VulkanCommandBuffer.h"
 
 namespace Vulk {
-    VulkanCommandBuffer::VulkanCommandBuffer()
-    {
-
-    }
-
     VulkanCommandBuffer::VulkanCommandBuffer(
-        VulkanDescriptorSet* vulkanDescriptorSet, VulkanRenderPass* vulkanRenderPass,
-        VulkanFrameBuffer* vulkanFrameBuffer, VulkanCommandPool* vulkanCommandPool,
-        VulkanGraphicPipeLine* vulkanGraphicPipeLine, VulkanVertexBuffer* vulkanVertexBuffer,
-        VulkanIndexBuffer* vulkanIndexBuffer
+        std::shared_ptr<VulkanDescriptorSet> vulkanDescriptorSet, std::shared_ptr<VulkanRenderPass> vulkanRenderPass,
+        std::shared_ptr<VulkanFrameBuffer> vulkanFrameBuffer, std::shared_ptr<VulkanCommandPool> vulkanCommandPool,
+        std::shared_ptr<VulkanGraphicPipeLine> vulkanGraphicPipeLine, std::shared_ptr<VulkanVertexBuffer> vulkanVertexBuffer,
+        std::shared_ptr<VulkanIndexBuffer> vulkanIndexBuffer
     )
         : m_VulkanDescriptorSet(vulkanDescriptorSet), m_VulkanRenderPass(vulkanRenderPass), 
         m_VulkanFrameBuffer(vulkanFrameBuffer), m_VulkanCommandPool(vulkanCommandPool),

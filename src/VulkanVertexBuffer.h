@@ -65,17 +65,20 @@ namespace Vulk {
 	class VulkanVertexBuffer
 	{
 	public:
-		VulkanVertexBuffer();
-		VulkanVertexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool);
+		VulkanVertexBuffer(
+			std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+			std::shared_ptr<VulkanImageView> vulkanImageView,
+			std::shared_ptr<VulkanCommandPool> vulkanCommandPool
+		);
 		~VulkanVertexBuffer();
 		void CreateVertexBuffer();
 		inline VkBuffer GetVertexBuffer() { return m_VertexBuffer; };
 		inline VkDeviceMemory GetVertexBufferMemory() { return m_VertexBufferMemory; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanLogicalDevice>m_VulkanLogicalDevice;
+		std::shared_ptr<VulkanImageView> m_VulkanImageView;
+		std::shared_ptr<VulkanCommandPool> m_VulkanCommandPool;
 		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;
-		VulkanImageView* m_VulkanImageView = nullptr;
-		VulkanCommandPool* m_VulkanCommandPool = nullptr;
 		VkDeviceMemory m_VertexBufferMemory = VK_NULL_HANDLE;
 	private:
 		//@todo duplicate in VulkanTextureImage

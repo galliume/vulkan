@@ -14,8 +14,11 @@ namespace Vulk {
 	class VulkanTextureImage
 	{
 	public:
-		VulkanTextureImage();
-		VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView);
+		VulkanTextureImage(
+			std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+			std::shared_ptr<VulkanCommandPool> vulkanCommandPool,
+			std::shared_ptr<VulkanImageView> vulkanImageView
+		);
 		~VulkanTextureImage();
 		void CreateTextureImage();
 		inline VkImage GetTextureImage() { return m_TextureImage; };
@@ -23,9 +26,9 @@ namespace Vulk {
 		inline VkImageView GetTextureImageView() { return m_TextureImageView; };
 		inline VkDeviceMemory GetTextureImageMemory() { return m_TextureImageMemory; };
 	private:
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
-		VulkanCommandPool* m_VulkanCommandPool = nullptr;
-		VulkanImageView* m_VulkanImageView = nullptr;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanCommandPool> m_VulkanCommandPool = nullptr;
+		std::shared_ptr<VulkanImageView> m_VulkanImageView = nullptr;
 		VkImage m_TextureImage = VK_NULL_HANDLE;
 		VkDeviceMemory m_TextureImageMemory = VK_NULL_HANDLE;
 		VkImageView m_TextureImageView = VK_NULL_HANDLE;

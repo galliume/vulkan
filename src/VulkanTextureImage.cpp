@@ -1,12 +1,12 @@
 #include "VulkanTextureImage.h"
 
 namespace Vulk {
-    VulkanTextureImage::VulkanTextureImage()
-    {
 
-    }
-
-	VulkanTextureImage::VulkanTextureImage(VulkanLogicalDevice* vulkanLogicalDevice, VulkanCommandPool* vulkanCommandPool, VulkanImageView* vulkanImageView)
+	VulkanTextureImage::VulkanTextureImage(
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice, 
+        std::shared_ptr<VulkanCommandPool> vulkanCommandPool, 
+        std::shared_ptr<VulkanImageView> vulkanImageView
+    )
         : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanCommandPool(vulkanCommandPool), m_VulkanImageView(vulkanImageView)
 	{
 

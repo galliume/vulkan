@@ -16,26 +16,25 @@ namespace Vulk {
 	class VulkanDescriptorSet
 	{
 	public:
-		VulkanDescriptorSet();
 		VulkanDescriptorSet(
-			VulkanSwapChain* vulkanSwapChain,
-			VulkanLogicalDevice* vulkanLogicalDevice,
-			VulkanTextureImage* vulkanTextureImage,
-			VulkanTextureSampler* vulkanTextureSampler,
-			VulkanDescriptorPool* vulkanDescriptorPool,
-			VulkanUniformBuffer* vulkanUniformBuffer
+			std::shared_ptr<VulkanSwapChain> vulkanSwapChain,
+			std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice,
+			std::shared_ptr<VulkanTextureImage> vulkanTextureImage,
+			std::shared_ptr<VulkanTextureSampler> vulkanTextureSampler,
+			std::shared_ptr<VulkanDescriptorPool> vulkanDescriptorPool,
+			std::shared_ptr<VulkanUniformBuffer> vulkanUniformBuffer
 		);
 		~VulkanDescriptorSet();
 		void CreateDescriptorSets();
 		inline std::vector<VkDescriptorSet> GetDescriptorSets() { return m_DescriptorSets; };
-		inline VulkanSwapChain* GetVulkanSwapChain() { return m_VulkanSwapChain; };
+		inline std::shared_ptr<VulkanSwapChain> GetVulkanSwapChain() { return m_VulkanSwapChain; };
 	private:
-		VulkanSwapChain* m_VulkanSwapChain = nullptr;
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
-		VulkanTextureImage* m_VulkanTextureImage = nullptr;
-		VulkanTextureSampler* m_VulkanTextureSampler = nullptr;
-		VulkanDescriptorPool* m_VulkanDescriptorPool = nullptr;
-		VulkanUniformBuffer* m_VulkanUniformBuffer = nullptr;
+		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanTextureImage> m_VulkanTextureImage = nullptr;
+		std::shared_ptr<VulkanTextureSampler> m_VulkanTextureSampler = nullptr;
+		std::shared_ptr<VulkanDescriptorPool> m_VulkanDescriptorPool = nullptr;
+		std::shared_ptr<VulkanUniformBuffer> m_VulkanUniformBuffer = nullptr;
 		std::vector<VkDescriptorSet> m_DescriptorSets = { };
 		VkDescriptorSetLayout m_DescriptorSetLayout = VK_NULL_HANDLE;
 	};

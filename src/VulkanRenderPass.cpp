@@ -1,12 +1,11 @@
 #include "VulkanRenderPass.h"
 
 namespace Vulk {
-    VulkanRenderPass::VulkanRenderPass()
-    {
 
-    }
-
-	VulkanRenderPass::VulkanRenderPass(VulkanSwapChain* vulkanSwapChain, VulkanLogicalDevice* vulkanLogicalDevice)
+    VulkanRenderPass::VulkanRenderPass(
+        std::shared_ptr<VulkanSwapChain> vulkanSwapChain, 
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice
+    )
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
 	{
 

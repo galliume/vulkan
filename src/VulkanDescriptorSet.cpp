@@ -4,19 +4,14 @@
 
 #include <set>
 
-namespace Vulk {
-    VulkanDescriptorSet::VulkanDescriptorSet()
-    {
-
-    }
-
+namespace Vulk {   
     VulkanDescriptorSet::VulkanDescriptorSet(
-        VulkanSwapChain* vulkanSwapChain, 
-        VulkanLogicalDevice* vulkanLogicalDevice, 
-        VulkanTextureImage* vulkanTextureImage,
-        VulkanTextureSampler* vulkanTextureSampler,
-        VulkanDescriptorPool* vulkanDescriptorPool,
-        VulkanUniformBuffer* vulkanUniformBuffer
+        std::shared_ptr<VulkanSwapChain> vulkanSwapChain, 
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice, 
+        std::shared_ptr<VulkanTextureImage> vulkanTextureImage,
+        std::shared_ptr<VulkanTextureSampler> vulkanTextureSampler,
+        std::shared_ptr<VulkanDescriptorPool> vulkanDescriptorPool,
+        std::shared_ptr<VulkanUniformBuffer> vulkanUniformBuffer
     )
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice), 
         m_VulkanTextureImage(vulkanTextureImage), m_VulkanTextureSampler(vulkanTextureSampler),

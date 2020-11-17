@@ -10,8 +10,7 @@ namespace Vulk {
 
 	class VulkanSwapChain {
 	public:
-		VulkanSwapChain();
-		VulkanSwapChain(VulkanContext* vulkanContext, VulkanLogicalDevice* vulkanLogicalDevice);
+		VulkanSwapChain(std::shared_ptr<VulkanContext> vulkanContext, std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice);
 		~VulkanSwapChain();
 		SwapChainSupportDetails QuerySwapChainSupport(VkPhysicalDevice device);
 		void CreateSwapChain();
@@ -21,8 +20,8 @@ namespace Vulk {
 		inline std::vector<VkImage> GetSwapChainImage() { return m_SwapChainImages; };
 		inline VkSwapchainKHR GetSwapChain() { return m_SwapChain; };
 	private:
-		VulkanContext* m_VulkanContext = VK_NULL_HANDLE;
-		VulkanLogicalDevice* m_VulkanLogicalDevice = nullptr;
+		std::shared_ptr<VulkanContext> m_VulkanContext = VK_NULL_HANDLE;
+		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		VkSwapchainKHR m_SwapChain = VK_NULL_HANDLE;
 		std::vector<VkImage>m_SwapChainImages = { };
 		VkFormat m_SwapChainImageFormat = { };

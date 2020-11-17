@@ -1,11 +1,11 @@
 #include "VulkanVertexBuffer.h"
 
 namespace Vulk {
-    VulkanVertexBuffer::VulkanVertexBuffer()
-    {
-    }
-
-	VulkanVertexBuffer::VulkanVertexBuffer(VulkanLogicalDevice* vulkanLogicalDevice, VulkanImageView* vulkanImageView, VulkanCommandPool* vulkanCommandPool)
+	VulkanVertexBuffer::VulkanVertexBuffer(
+        std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice, 
+        std::shared_ptr<VulkanImageView> vulkanImageView, 
+        std::shared_ptr<VulkanCommandPool> vulkanCommandPool
+    )
         : m_VulkanLogicalDevice(vulkanLogicalDevice), m_VulkanImageView(vulkanImageView), m_VulkanCommandPool(vulkanCommandPool)
 	{
 	}
