@@ -21,7 +21,7 @@ namespace Vulk {
 		);
 		~VulkanCommandBuffer();
 		void CreateCommandBuffers();
-		inline std::vector<VkCommandBuffer> GetCommandBuffers() { return m_CommandBuffers; }
+		inline std::vector<VkCommandBuffer>* GetCommandBuffers() { return m_CommandBuffers; }
 	private:
 		std::shared_ptr<VulkanDescriptorSet> m_VulkanDescriptorSet = nullptr;
 		std::shared_ptr<VulkanRenderPass> m_VulkanRenderPass = nullptr;
@@ -30,6 +30,6 @@ namespace Vulk {
 		std::shared_ptr<VulkanGraphicPipeLine> m_VulkanGraphicPipeLine = nullptr;
 		std::shared_ptr<VulkanVertexBuffer> m_VulkanVertexBuffer = nullptr;
 		std::shared_ptr<VulkanIndexBuffer> m_VulkanIndexBuffer = nullptr;
-		std::vector<VkCommandBuffer> m_CommandBuffers = { };
+		std::vector<VkCommandBuffer>* m_CommandBuffers = { };
 	};
 }

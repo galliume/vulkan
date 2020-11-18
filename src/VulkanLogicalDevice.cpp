@@ -15,7 +15,7 @@ namespace Vulk {
 
     void VulkanLogicalDevice::CreateLogicalDevice()
     {
-        QueueFamilyIndices indices = m_VulkanPhysicalDevice->GetQueueFamilyIndices();
+        QueueFamilyIndices indices = *m_VulkanPhysicalDevice->GetQueueFamilyIndices();
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
         std::set<uint32_t> uniqueQueueFamilies = { indices.graphicsFamily.value(), indices.presentFamily.value() };
@@ -46,13 +46,13 @@ namespace Vulk {
         createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
         createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
 
-        if (vkCreateDevice(m_VulkanPhysicalDevice->GetPhysicalDevice(), &createInfo, nullptr, &m_LogicalDevice) != VK_SUCCESS)
+        if (vkCreateDevice(*m_VulkanPhysicalDevice->GetPhysicalDevice(), &createInfo, nullptr, m_LogicalDevice) != VK_SUCCESS)
         {
             VULK_CRITICAL("Can't create logical device");
         }
         
-        vkGetDeviceQueue(m_LogicalDevice, indices.graphicsFamily.value(), 0, &m_GraphicsQueue);
-        vkGetDeviceQueue(m_LogicalDevice, indices.presentFamily.value(), 0, &m_PresentQueue);
+        vkGetDeviceQueue(*m_LogicalDevice, indices.graphicsFamily.value(), 0, m_GraphicsQueue);
+        vkGetDeviceQueue(*m_LogicalDevice, indices.presentFamily.value(), 0, m_PresentQueue);
 
         VULK_TRACE("Created logical device");
     }

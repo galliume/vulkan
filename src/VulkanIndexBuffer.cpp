@@ -23,20 +23,20 @@ namespace Vulk {
         CreateBuffer(bufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, stagingBuffer, stagingBufferMemory);
 
         void* data;
-        vkMapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
+        vkMapMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, 0, bufferSize, 0, &data);
         memcpy(data, indices.data(), (size_t)bufferSize);
-        vkUnmapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory);
+        vkUnmapMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory);
 
         CreateBuffer(
             bufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 
-            m_IndexBuffer,
-            m_IndexBufferMemory
+            *m_IndexBuffer,
+            *m_IndexBufferMemory
         );
 
-        CopyBuffer(stagingBuffer, m_IndexBuffer, bufferSize);
+        CopyBuffer(stagingBuffer, *m_IndexBuffer, bufferSize);
 
-        vkDestroyBuffer(m_VulkanLogicalDevice->GetDevice(), stagingBuffer, nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, nullptr);
+        vkDestroyBuffer(*m_VulkanLogicalDevice->GetDevice(), stagingBuffer, nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, nullptr);
     }
 
     void VulkanIndexBuffer::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory)
@@ -47,25 +47,25 @@ namespace Vulk {
         bufferInfo.usage = usage;
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-        if (vkCreateBuffer(m_VulkanLogicalDevice->GetDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+        if (vkCreateBuffer(*m_VulkanLogicalDevice->GetDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to create buffer");
         }
 
         VkMemoryRequirements memRequirements;
-        vkGetBufferMemoryRequirements(m_VulkanLogicalDevice->GetDevice(), buffer, &memRequirements);
+        vkGetBufferMemoryRequirements(*m_VulkanLogicalDevice->GetDevice(), buffer, &memRequirements);
 
         VkMemoryAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
         allocInfo.allocationSize = memRequirements.size;
         allocInfo.memoryTypeIndex = m_VulkanImageView->FindMemoryType(memRequirements.memoryTypeBits, properties);
 
-        if (vkAllocateMemory(m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+        if (vkAllocateMemory(*m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to allocate buffer memory");
         }
 
-        vkBindBufferMemory(m_VulkanLogicalDevice->GetDevice(), buffer, bufferMemory, 0);
+        vkBindBufferMemory(*m_VulkanLogicalDevice->GetDevice(), buffer, bufferMemory, 0);
     }
 
     void VulkanIndexBuffer::CopyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size)
@@ -113,11 +113,11 @@ namespace Vulk {
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandPool = m_VulkanCommandPool->GetCommandPool();
+        allocInfo.commandPool = *m_VulkanCommandPool->GetCommandPool();
         allocInfo.commandBufferCount = 1;
 
         VkCommandBuffer commandBuffer;
-        vkAllocateCommandBuffers(m_VulkanLogicalDevice->GetDevice(), &allocInfo, &commandBuffer);
+        vkAllocateCommandBuffers(*m_VulkanLogicalDevice->GetDevice(), &allocInfo, &commandBuffer);
 
         VkCommandBufferBeginInfo beginInfo{};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -137,9 +137,9 @@ namespace Vulk {
         submitInfo.commandBufferCount = 1;
         submitInfo.pCommandBuffers = &commandBuffer;
 
-        vkQueueSubmit(m_VulkanLogicalDevice->GetGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
-        vkQueueWaitIdle(m_VulkanLogicalDevice->GetGraphicsQueue());
+        vkQueueSubmit(*m_VulkanLogicalDevice->GetGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+        vkQueueWaitIdle(*m_VulkanLogicalDevice->GetGraphicsQueue());
 
-        vkFreeCommandBuffers(m_VulkanLogicalDevice->GetDevice(), m_VulkanCommandPool->GetCommandPool(), 1, &commandBuffer);
+        vkFreeCommandBuffers(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanCommandPool->GetCommandPool(), 1, &commandBuffer);
     }
 }

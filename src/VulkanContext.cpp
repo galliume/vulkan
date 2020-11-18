@@ -71,11 +71,11 @@ namespace Vulk {
         PopulateDebugMessengerCreateInfo(debugCreateInfo);
         createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 
-        if (vkCreateInstance(&createInfo, nullptr, &m_VkInstance) != VK_SUCCESS) {
+        if (vkCreateInstance(&createInfo, nullptr, m_VkInstance) != VK_SUCCESS) {
             VULK_CRITICAL("failed to create Vulkan instance!");
         }
 
-        if (glfwCreateWindowSurface(m_VkInstance, m_WindowHandle, nullptr, &m_Surface) != VK_SUCCESS) {
+        if (glfwCreateWindowSurface(*m_VkInstance, m_WindowHandle, nullptr, m_Surface) != VK_SUCCESS) {
             VULK_CRITICAL("Can't create the surface");
         }
 

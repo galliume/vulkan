@@ -30,7 +30,7 @@ namespace Vulk {
         samplerInfo.minLod = 0.0f;
         samplerInfo.maxLod = 0.0f;
 
-        if (vkCreateSampler(m_VulkanLogicalDevice->GetDevice(), &samplerInfo, nullptr, &m_TextureSampler) != VK_SUCCESS) {
+        if (vkCreateSampler(*m_VulkanLogicalDevice->GetDevice(), &samplerInfo, nullptr, m_TextureSampler) != VK_SUCCESS) {
             throw std::runtime_error("failed to create texture sampler!");
         }
     }

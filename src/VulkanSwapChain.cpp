@@ -15,7 +15,7 @@ namespace Vulk {
 
     void VulkanSwapChain::CreateSwapChain()
     {
-        SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(m_VulkanLogicalDevice->GetPhysicalDevice());
+        SwapChainSupportDetails swapChainSupport = QuerySwapChainSupport(*m_VulkanLogicalDevice->GetPhysicalDevice());
 
         VkSurfaceFormatKHR surfaceFormat = ChooseSwapSurfaceFormat(swapChainSupport.formats);
         VkPresentModeKHR presentMode = ChooseSwapPresentMode(swapChainSupport.presentModes);
@@ -30,7 +30,7 @@ namespace Vulk {
 
         VkSwapchainCreateInfoKHR createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-        createInfo.surface = m_VulkanContext->GetSurface();
+        createInfo.surface = *m_VulkanContext->GetSurface();
         createInfo.minImageCount = imageCount;
         createInfo.imageFormat = surfaceFormat.format;
         createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -38,7 +38,7 @@ namespace Vulk {
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        QueueFamilyIndices indices = m_VulkanLogicalDevice->GetQueueFamilyIndices();
+        QueueFamilyIndices indices = *m_VulkanLogicalDevice->GetQueueFamilyIndices();
         uint32_t queueFamilyIndices[] = { indices.graphicsFamily.value(), indices.presentFamily.value() };
 
         if (indices.graphicsFamily != indices.presentFamily) {
@@ -59,16 +59,16 @@ namespace Vulk {
         createInfo.clipped = VK_TRUE;
         createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-        if (vkCreateSwapchainKHR(m_VulkanLogicalDevice->GetDevice(), &createInfo, nullptr, &m_SwapChain) != VK_SUCCESS)
+        if (vkCreateSwapchainKHR(*m_VulkanLogicalDevice->GetDevice(), &createInfo, nullptr, m_SwapChain) != VK_SUCCESS)
         {
             throw std::runtime_error("Can't create swap chain");
         }
 
-        vkGetSwapchainImagesKHR(m_VulkanLogicalDevice->GetDevice(), m_SwapChain, &imageCount, nullptr);
-        m_SwapChainImages.resize(imageCount);
-        vkGetSwapchainImagesKHR(m_VulkanLogicalDevice->GetDevice(), m_SwapChain, &imageCount, m_SwapChainImages.data());
-        m_SwapChainImageFormat = surfaceFormat.format;
-        m_SwapChainExtent = extent;
+        vkGetSwapchainImagesKHR(*m_VulkanLogicalDevice->GetDevice(), *m_SwapChain, &imageCount, nullptr);
+        m_SwapChainImages->resize(imageCount);
+        vkGetSwapchainImagesKHR(*m_VulkanLogicalDevice->GetDevice(), *m_SwapChain, &imageCount, m_SwapChainImages->data());
+        m_SwapChainImageFormat = &surfaceFormat.format;
+        m_SwapChainExtent = &extent;
 
         VULK_TRACE("Swap chain created");
     }
@@ -77,25 +77,25 @@ namespace Vulk {
     {
         SwapChainSupportDetails details;
 
-        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, m_VulkanContext->GetSurface(), &details.capabilities);
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, *m_VulkanContext->GetSurface(), &details.capabilities);
 
         uint32_t formatCount;
-        vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_VulkanContext->GetSurface(), &formatCount, nullptr);
+        vkGetPhysicalDeviceSurfaceFormatsKHR(device, *m_VulkanContext->GetSurface(), &formatCount, nullptr);
 
         if (formatCount != 0)
         {
             details.formats.resize(formatCount);
-            vkGetPhysicalDeviceSurfaceFormatsKHR(device, m_VulkanContext->GetSurface(), &formatCount, details.formats.data());
+            vkGetPhysicalDeviceSurfaceFormatsKHR(device, *m_VulkanContext->GetSurface(), &formatCount, details.formats.data());
 
         }
 
         uint32_t presentModeCount;
-        vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_VulkanContext->GetSurface(), &presentModeCount, nullptr);
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, *m_VulkanContext->GetSurface(), &presentModeCount, nullptr);
 
         if (presentModeCount != 0)
         {
             details.presentModes.resize(presentModeCount);
-            vkGetPhysicalDeviceSurfacePresentModesKHR(device, m_VulkanContext->GetSurface(), &presentModeCount, details.presentModes.data());
+            vkGetPhysicalDeviceSurfacePresentModesKHR(device, *m_VulkanContext->GetSurface(), &presentModeCount, details.presentModes.data());
         }
 
         return details;

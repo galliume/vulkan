@@ -12,9 +12,9 @@ namespace Vulk {
 		VulkanTextureSampler(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice);
 		~VulkanTextureSampler();
 		void CreateTextureSampler();
-		inline VkSampler GetTextureSampler() { return m_TextureSampler; };
+		inline VkSampler* GetTextureSampler() { return m_TextureSampler; };
 	private:
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
-		VkSampler m_TextureSampler = VK_NULL_HANDLE;
+		VkSampler* m_TextureSampler = VK_NULL_HANDLE;
 	};
 }

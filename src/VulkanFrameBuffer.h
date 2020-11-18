@@ -20,12 +20,12 @@ namespace Vulk {
 		);
 		~VulkanFrameBuffer();
 		void CreateFramebuffers();
-		inline std::vector<VkFramebuffer> GetSwapChainFramebuffers() { return m_SwapChainFramebuffers; };
+		inline std::vector<VkFramebuffer>* GetSwapChainFramebuffers() { return m_SwapChainFramebuffers; };
 	private:
 		std::shared_ptr<VulkanRenderPass>m_VulkanRenderPass = nullptr;
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		std::shared_ptr<VulkanImageView> m_VulkanImageView = nullptr;
 		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
-		std::vector<VkFramebuffer> m_SwapChainFramebuffers = { };
+		std::vector<VkFramebuffer>* m_SwapChainFramebuffers = { };
 	};
 }

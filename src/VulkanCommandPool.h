@@ -13,9 +13,9 @@ namespace Vulk {
 		VulkanCommandPool(std::shared_ptr<VulkanLogicalDevice> vulkanLogicalDevice);
 		~VulkanCommandPool();
 		void CreateCommandPool();
-		VkCommandPool GetCommandPool() { return m_CommandPool; };
+		VkCommandPool* GetCommandPool() { return m_CommandPool; };
 	private:
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
-		VkCommandPool m_CommandPool = VK_NULL_HANDLE;
+		VkCommandPool* m_CommandPool = VK_NULL_HANDLE;
 	};
 }

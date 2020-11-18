@@ -62,33 +62,33 @@ namespace Vulk
     {
         CleanupSwapChain();
 
-        vkDestroySampler(m_VulkanLogicalDevice->GetDevice(), m_VulkanTextureSampler->GetTextureSampler(), nullptr);
-        vkDestroyImageView(m_VulkanLogicalDevice->GetDevice(), m_VulkanTextureImage->GetTextureImageView(), nullptr);
+        vkDestroySampler(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanTextureSampler->GetTextureSampler(), nullptr);
+        vkDestroyImageView(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanTextureImage->GetTextureImageView(), nullptr);
 
-        vkDestroyImage(m_VulkanLogicalDevice->GetDevice(), m_VulkanTextureImage->GetTextureImage(), nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanTextureImage->GetTextureImageMemory(), nullptr);
+        vkDestroyImage(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanTextureImage->GetTextureImage(), nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanTextureImage->GetTextureImageMemory(), nullptr);
 
-        vkDestroyDescriptorSetLayout(m_VulkanLogicalDevice->GetDevice(), *m_VulkanDescriptorSetLayout->GetDescriptorSetLayout(), nullptr);
-        vkDestroyBuffer(m_VulkanLogicalDevice->GetDevice(), m_VulkanIndexBuffer->GetIndexBuffer(), nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanIndexBuffer->GetIndexBufferMemory(), nullptr);
+        vkDestroyDescriptorSetLayout(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanDescriptorSetLayout->GetDescriptorSetLayout(), nullptr);
+        vkDestroyBuffer(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanIndexBuffer->GetIndexBuffer(), nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanIndexBuffer->GetIndexBufferMemory(), nullptr);
 
-        vkDestroyBuffer(m_VulkanLogicalDevice->GetDevice(), m_VulkanVertexBuffer->GetVertexBuffer(), nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanVertexBuffer->GetVertexBufferMemory(), nullptr);
+        vkDestroyBuffer(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanVertexBuffer->GetVertexBuffer(), nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanVertexBuffer->GetVertexBufferMemory(), nullptr);
 
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-            vkDestroySemaphore(m_VulkanLogicalDevice->GetDevice(), m_RenderFinishedSemaphores[i], nullptr);
-            vkDestroySemaphore(m_VulkanLogicalDevice->GetDevice(), m_ImageAvailableSemaphores[i], nullptr);
-            vkDestroyFence(m_VulkanLogicalDevice->GetDevice(), m_InFlightFences[i], nullptr);
+            vkDestroySemaphore(*m_VulkanLogicalDevice->GetDevice(), (*m_RenderFinishedSemaphores)[i], nullptr);
+            vkDestroySemaphore(*m_VulkanLogicalDevice->GetDevice(), (*m_ImageAvailableSemaphores)[i], nullptr);
+            vkDestroyFence(*m_VulkanLogicalDevice->GetDevice(), (*m_InFlightFences)[i], nullptr);
         }
 
-        vkDestroyCommandPool(m_VulkanLogicalDevice->GetDevice(), m_VulkanCommandPool->GetCommandPool(), nullptr);
+        vkDestroyCommandPool(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanCommandPool->GetCommandPool(), nullptr);
 
-        vkDestroyDevice(m_VulkanLogicalDevice->GetDevice(), nullptr);
+        vkDestroyDevice(*m_VulkanLogicalDevice->GetDevice(), nullptr);
 
-        DestroyDebugUtilsMessengerEXT(m_VulkanContext->GetInstance(), m_DebugUtilsCallback, nullptr);
+        DestroyDebugUtilsMessengerEXT(*m_VulkanContext->GetInstance(), m_DebugUtilsCallback, nullptr);
 
-        vkDestroySurfaceKHR(m_VulkanContext->GetInstance(), m_VulkanContext->GetSurface(), nullptr);
-        vkDestroyInstance(m_VulkanContext->GetInstance(), nullptr);
+        vkDestroySurfaceKHR(*m_VulkanContext->GetInstance(), *m_VulkanContext->GetSurface(), nullptr);
+        vkDestroyInstance(*m_VulkanContext->GetInstance(), nullptr);
 
         glfwDestroyWindow(m_VulkanContext->GetWindow());
         glfwTerminate();
@@ -96,39 +96,39 @@ namespace Vulk
 
     void VulkanService::CleanupSwapChain()
     {
-        vkDestroyImageView(m_VulkanLogicalDevice->GetDevice(), m_VulkanImageView->GetDepthImageView(), nullptr);
-        vkDestroyImage(m_VulkanLogicalDevice->GetDevice(), m_VulkanImageView->GetDepthImage(), nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanImageView->GetDepthImageMemory(), nullptr);
+        vkDestroyImageView(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanImageView->GetDepthImageView(), nullptr);
+        vkDestroyImage(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanImageView->GetDepthImage(), nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanImageView->GetDepthImageMemory(), nullptr);
 
-        for (auto framebuffer : m_VulkanFrameBuffer->GetSwapChainFramebuffers())
+        for (auto framebuffer : *m_VulkanFrameBuffer->GetSwapChainFramebuffers())
         {
-            vkDestroyFramebuffer(m_VulkanLogicalDevice->GetDevice(), framebuffer, nullptr);
+            vkDestroyFramebuffer(*m_VulkanLogicalDevice->GetDevice(), framebuffer, nullptr);
         }
 
         vkFreeCommandBuffers(
-            m_VulkanLogicalDevice->GetDevice(), 
-            m_VulkanCommandPool->GetCommandPool(), 
-            static_cast<uint32_t>(m_VulkanCommandBuffer->GetCommandBuffers().size()),
-            m_VulkanCommandBuffer->GetCommandBuffers().data()
+            *m_VulkanLogicalDevice->GetDevice(), 
+            *m_VulkanCommandPool->GetCommandPool(), 
+            static_cast<uint32_t>(m_VulkanCommandBuffer->GetCommandBuffers()->size()),
+            m_VulkanCommandBuffer->GetCommandBuffers()->data()
         );
-        vkDestroyPipeline(m_VulkanLogicalDevice->GetDevice(), m_VulkanGraphicPipeLine->GetGraphicsPipeline(), nullptr);
-        vkDestroyPipelineLayout(m_VulkanLogicalDevice->GetDevice(), m_VulkanGraphicPipeLine->GetPipelineLayout(), nullptr);
-        vkDestroyRenderPass(m_VulkanLogicalDevice->GetDevice(), m_VulkanRenderPass->GetRenderPass(), nullptr);
+        vkDestroyPipeline(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanGraphicPipeLine->GetGraphicsPipeline(), nullptr);
+        vkDestroyPipelineLayout(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanGraphicPipeLine->GetPipelineLayout(), nullptr);
+        vkDestroyRenderPass(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanRenderPass->GetRenderPass(), nullptr);
 
-        for (auto imageView : m_VulkanSwapChain->GetSwapChainImageViews())
+        for (auto imageView : *m_VulkanSwapChain->GetSwapChainImageViews())
         {
-            vkDestroyImageView(m_VulkanLogicalDevice->GetDevice(), imageView, nullptr);
+            vkDestroyImageView(*m_VulkanLogicalDevice->GetDevice(), imageView, nullptr);
         }
 
-        vkDestroySwapchainKHR(m_VulkanLogicalDevice->GetDevice(), m_VulkanSwapChain->GetSwapChain(), nullptr);
+        vkDestroySwapchainKHR(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanSwapChain->GetSwapChain(), nullptr);
 
-        for (size_t i = 0; i < m_VulkanSwapChain->GetSwapChainImage().size(); i++)
+        for (size_t i = 0; i < m_VulkanSwapChain->GetSwapChainImage()->size(); i++)
         {
-            vkDestroyBuffer(m_VulkanLogicalDevice->GetDevice(), m_VulkanUniformBuffer->GetUniformBuffers()[i], nullptr);
-            vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanUniformBuffer->GetUniformBuffersMemory()[i], nullptr);
+            vkDestroyBuffer(*m_VulkanLogicalDevice->GetDevice(), (*m_VulkanUniformBuffer->GetUniformBuffers())[i], nullptr);
+            vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), (*m_VulkanUniformBuffer->GetUniformBuffersMemory())[i], nullptr);
         }
 
-        vkDestroyDescriptorPool(m_VulkanLogicalDevice->GetDevice(), m_VulkanDescriptorPool->GetDescriptorPool(), nullptr);
+        vkDestroyDescriptorPool(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanDescriptorPool->GetDescriptorPool(), nullptr);
     }
     void VulkanService::RecreateSwapChain()
     {
@@ -141,7 +141,7 @@ namespace Vulk
             glfwWaitEvents();
         }
 
-        vkDeviceWaitIdle(m_VulkanLogicalDevice->GetDevice());
+        vkDeviceWaitIdle(*m_VulkanLogicalDevice->GetDevice());
 
         CleanupSwapChain();
         Init();
@@ -149,10 +149,10 @@ namespace Vulk
 
     void VulkanService::CreateSyncObjects()
     {
-        m_ImageAvailableSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-        m_RenderFinishedSemaphores.resize(MAX_FRAMES_IN_FLIGHT);
-        m_InFlightFences.resize(MAX_FRAMES_IN_FLIGHT);
-        m_ImagesInFlight.resize(m_VulkanSwapChain->GetSwapChainImage().size(), VK_NULL_HANDLE);
+        m_ImageAvailableSemaphores->resize(MAX_FRAMES_IN_FLIGHT);
+        m_RenderFinishedSemaphores->resize(MAX_FRAMES_IN_FLIGHT);
+        m_InFlightFences->resize(MAX_FRAMES_IN_FLIGHT);
+        m_ImagesInFlight->resize(m_VulkanSwapChain->GetSwapChainImage()->size(), VK_NULL_HANDLE);
 
         VkSemaphoreCreateInfo semaphoreInfo{};
         semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
@@ -162,23 +162,23 @@ namespace Vulk
         fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
 
         for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-            if (vkCreateSemaphore(m_VulkanLogicalDevice->GetDevice(), &semaphoreInfo, nullptr, &m_ImageAvailableSemaphores[i]) != VK_SUCCESS ||
-                vkCreateSemaphore(m_VulkanLogicalDevice->GetDevice(), &semaphoreInfo, nullptr, &m_RenderFinishedSemaphores[i]) != VK_SUCCESS ||
-                vkCreateFence(m_VulkanLogicalDevice->GetDevice(), &fenceInfo, nullptr, &m_InFlightFences[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create synchronization objects for a frame!");
+            if (vkCreateSemaphore(*m_VulkanLogicalDevice->GetDevice(), &semaphoreInfo, nullptr, &(*m_ImageAvailableSemaphores)[i]) != VK_SUCCESS ||
+                vkCreateSemaphore(*m_VulkanLogicalDevice->GetDevice(), &semaphoreInfo, nullptr, &(*m_RenderFinishedSemaphores)[i]) != VK_SUCCESS ||
+                vkCreateFence(*m_VulkanLogicalDevice->GetDevice(), &fenceInfo, nullptr, &(*m_InFlightFences)[i]) != VK_SUCCESS) {
+                VULK_CRITICAL("failed to create synchronization objects for a frame!");
             }
         }
     }
     void VulkanService::DrawFrame()
     {
-        vkWaitForFences(m_VulkanLogicalDevice->GetDevice(), 1, &m_InFlightFences[m_CurrentFrame], VK_TRUE, UINT64_MAX);
+        vkWaitForFences(*m_VulkanLogicalDevice->GetDevice(), 1, &(*m_InFlightFences)[*m_CurrentFrame], VK_TRUE, UINT64_MAX);
 
         uint32_t imageIndex;
         VkResult result = vkAcquireNextImageKHR(
-            m_VulkanLogicalDevice->GetDevice(), 
-            m_VulkanSwapChain->GetSwapChain(), 
+            *m_VulkanLogicalDevice->GetDevice(), 
+            *m_VulkanSwapChain->GetSwapChain(), 
             UINT64_MAX, 
-            m_ImageAvailableSemaphores[m_CurrentFrame],
+            (*m_ImageAvailableSemaphores)[*m_CurrentFrame],
             VK_NULL_HANDLE, 
             &imageIndex
         );
@@ -194,33 +194,33 @@ namespace Vulk
             throw std::runtime_error("Can't present image to the swap chain");
         }
 
-        if (m_ImagesInFlight[imageIndex] != VK_NULL_HANDLE)
+        if (&(*m_ImagesInFlight)[imageIndex] != VK_NULL_HANDLE)
         {
-            vkWaitForFences(m_VulkanLogicalDevice->GetDevice(), 1, &m_ImagesInFlight[imageIndex], VK_TRUE, UINT64_MAX);
+            vkWaitForFences(*m_VulkanLogicalDevice->GetDevice(), 1, &(*m_ImagesInFlight)[imageIndex], VK_TRUE, UINT64_MAX);
         }
-        m_ImagesInFlight[imageIndex] = m_ImagesInFlight[m_CurrentFrame];
+        (*m_ImagesInFlight)[imageIndex] = (*m_ImagesInFlight)[*m_CurrentFrame];
 
         UpdateUniformBuffer(imageIndex);
 
         VkSubmitInfo submitInfo{};
         submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 
-        VkSemaphore waitSemaphores[] = { m_ImageAvailableSemaphores[m_CurrentFrame] };
+        VkSemaphore waitSemaphores[] = { (*m_ImageAvailableSemaphores)[*m_CurrentFrame] };
         VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
         submitInfo.waitSemaphoreCount = 1;
         submitInfo.pWaitSemaphores = waitSemaphores;
         submitInfo.pWaitDstStageMask = waitStages;
 
         submitInfo.commandBufferCount = 1;
-        submitInfo.pCommandBuffers = &m_VulkanCommandBuffer->GetCommandBuffers()[imageIndex];
+        submitInfo.pCommandBuffers = &(*m_VulkanCommandBuffer->GetCommandBuffers())[imageIndex];
 
-        VkSemaphore signalSemaphores[] = { m_RenderFinishedSemaphores[m_CurrentFrame] };
+        VkSemaphore signalSemaphores[] = { (*m_RenderFinishedSemaphores)[*m_CurrentFrame] };
         submitInfo.signalSemaphoreCount = 1;
         submitInfo.pSignalSemaphores = signalSemaphores;
 
-        vkResetFences(m_VulkanLogicalDevice->GetDevice(), 1, &m_InFlightFences[m_CurrentFrame]);
+        vkResetFences(*m_VulkanLogicalDevice->GetDevice(), 1, &(*m_InFlightFences)[*m_CurrentFrame]);
 
-        if (vkQueueSubmit(m_GraphicsQueue, 1, &submitInfo, m_InFlightFences[m_CurrentFrame]) != VK_SUCCESS)
+        if (vkQueueSubmit(*m_GraphicsQueue, 1, &submitInfo, (*m_InFlightFences)[*m_CurrentFrame]) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to submit draw command buffer!");
         }
@@ -231,13 +231,13 @@ namespace Vulk
         presentInfo.waitSemaphoreCount = 1;
         presentInfo.pWaitSemaphores = signalSemaphores;
 
-        VkSwapchainKHR swapChains[] = { m_VulkanSwapChain->GetSwapChain() };
+        VkSwapchainKHR swapChains[] = { *m_VulkanSwapChain->GetSwapChain() };
         presentInfo.swapchainCount = 1;
         presentInfo.pSwapchains = swapChains;
 
         presentInfo.pImageIndices = &imageIndex;
 
-        result = vkQueuePresentKHR(m_PresentQueue, &presentInfo);
+        result = vkQueuePresentKHR(*m_PresentQueue, &presentInfo);
 
         if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR)
         {
@@ -248,7 +248,7 @@ namespace Vulk
             throw std::runtime_error("Can't present image");
         }
 
-        m_CurrentFrame = (m_CurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+        *m_CurrentFrame = (*m_CurrentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
     }
 
     void VulkanService::UpdateUniformBuffer(uint32_t currentImage)
@@ -265,7 +265,7 @@ namespace Vulk
 
         ubo.proj = glm::perspective(
             glm::radians(45.0f), 
-            m_VulkanSwapChain->GetSwapChainExtent().width / (float)m_VulkanSwapChain->GetSwapChainExtent().height, 
+            m_VulkanSwapChain->GetSwapChainExtent()->width / (float)m_VulkanSwapChain->GetSwapChainExtent()->height, 
             0.1f, 
             10.0f
         );
@@ -273,8 +273,8 @@ namespace Vulk
         ubo.proj[1][1] *= -1;
 
         void* data;
-        vkMapMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanUniformBuffer->GetUniformBuffersMemory()[currentImage], 0, sizeof(ubo), 0, &data);
+        vkMapMemory(*m_VulkanLogicalDevice->GetDevice(), (*m_VulkanUniformBuffer->GetUniformBuffersMemory())[currentImage], 0, sizeof(ubo), 0, &data);
         memcpy(data, &ubo, sizeof(ubo));
-        vkUnmapMemory(m_VulkanLogicalDevice->GetDevice(), m_VulkanUniformBuffer->GetUniformBuffersMemory()[currentImage]);
+        vkUnmapMemory(*m_VulkanLogicalDevice->GetDevice(), (*m_VulkanUniformBuffer->GetUniformBuffersMemory())[currentImage]);
     }
 }

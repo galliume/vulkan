@@ -77,14 +77,14 @@ namespace Vulk {
         VkViewport viewport{};
         viewport.x = 0.0f;
         viewport.y = 0.0f;
-        viewport.width = (float) m_VulkanSwapChain->GetSwapChainExtent().width;
-        viewport.height = (float) m_VulkanSwapChain->GetSwapChainExtent().height;
+        viewport.width = (float) m_VulkanSwapChain->GetSwapChainExtent()->width;
+        viewport.height = (float) m_VulkanSwapChain->GetSwapChainExtent()->height;
         viewport.minDepth = 0.0f;
         viewport.maxDepth = 1.0f;
 
         VkRect2D scissor{};
         scissor.offset = { 0, 0 };
-        scissor.extent = m_VulkanSwapChain->GetSwapChainExtent();
+        scissor.extent = *m_VulkanSwapChain->GetSwapChainExtent();
 
         VkPipelineViewportStateCreateInfo viewportState{};
         viewportState.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -154,7 +154,7 @@ namespace Vulk {
         pipelineLayoutInfo.pSetLayouts = m_VulkanDescriptorSetLayout->GetDescriptorSetLayout();
 
 
-        if (vkCreatePipelineLayout(m_VulkanLogicalDevice->GetDevice(), &pipelineLayoutInfo, nullptr, &m_PipelineLayout) != VK_SUCCESS)
+        if (vkCreatePipelineLayout(*m_VulkanLogicalDevice->GetDevice(), &pipelineLayoutInfo, nullptr, m_PipelineLayout) != VK_SUCCESS)
         {
             throw std::runtime_error("Can't create layout pipeline");
         }
@@ -171,19 +171,19 @@ namespace Vulk {
         pipelineInfo.pDepthStencilState = nullptr; // Optionnel
         pipelineInfo.pColorBlendState = &colorBlending;
         pipelineInfo.pDynamicState = nullptr; // Optionnel
-        pipelineInfo.layout = m_PipelineLayout;
-        pipelineInfo.renderPass = m_VulkanRenderPass->GetRenderPass();
+        pipelineInfo.layout = *m_PipelineLayout;
+        pipelineInfo.renderPass = *m_VulkanRenderPass->GetRenderPass();
         pipelineInfo.subpass = 0;
         pipelineInfo.basePipelineHandle = VK_NULL_HANDLE; // Optionnel
         pipelineInfo.pDepthStencilState = &depthStencil;
 
-        if (vkCreateGraphicsPipelines(m_VulkanLogicalDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &m_GraphicsPipeline) != VK_SUCCESS)
+        if (vkCreateGraphicsPipelines(*m_VulkanLogicalDevice->GetDevice(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, m_GraphicsPipeline) != VK_SUCCESS)
         {
             throw std::runtime_error("Can't create graphic pipeline");
         }
 
-        vkDestroyShaderModule(m_VulkanLogicalDevice->GetDevice(), fragShaderModule, nullptr);
-        vkDestroyShaderModule(m_VulkanLogicalDevice->GetDevice(), vertShaderModule, nullptr);
+        vkDestroyShaderModule(*m_VulkanLogicalDevice->GetDevice(), fragShaderModule, nullptr);
+        vkDestroyShaderModule(*m_VulkanLogicalDevice->GetDevice(), vertShaderModule, nullptr);
     }
 
     VkShaderModule VulkanGraphicPipeLine::CreateShaderModule(const std::vector<char>& code)
@@ -194,7 +194,7 @@ namespace Vulk {
         createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
         VkShaderModule shaderModule;
-        if (vkCreateShaderModule(m_VulkanLogicalDevice->GetDevice(), &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
+        if (vkCreateShaderModule(*m_VulkanLogicalDevice->GetDevice(), &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
         {
             throw std::runtime_error("Can't create module shader");
         }

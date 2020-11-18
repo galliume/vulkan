@@ -67,14 +67,14 @@ namespace Vulk
 		std::shared_ptr<VulkanDescriptorSet> m_VulkanDescriptorSet;
 		std::shared_ptr<VulkanCommandBuffer> m_VulkanCommandBuffer;
 
-		std::vector<VkSemaphore> m_ImageAvailableSemaphores;
-		std::vector<VkSemaphore> m_RenderFinishedSemaphores;
-		std::vector<VkFence> m_ImagesInFlight;
-		std::vector<VkFence> m_InFlightFences;
-		size_t m_CurrentFrame = 0;
-		bool m_FramebufferResized = false;
-		VkQueue m_GraphicsQueue = VK_NULL_HANDLE;
-		VkQueue m_PresentQueue = VK_NULL_HANDLE;
+		std::vector<VkSemaphore>* m_ImageAvailableSemaphores;
+		std::vector<VkSemaphore>* m_RenderFinishedSemaphores;
+		std::vector<VkFence>* m_ImagesInFlight;
+		std::vector<VkFence>* m_InFlightFences;
+		size_t* m_CurrentFrame = 0;
+		bool* m_FramebufferResized = false;
+		VkQueue* m_GraphicsQueue = VK_NULL_HANDLE;
+		VkQueue* m_PresentQueue = VK_NULL_HANDLE;
 
 		VkDebugUtilsMessengerEXT m_DebugUtilsCallback = VK_NULL_HANDLE;
 	};

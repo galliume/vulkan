@@ -16,11 +16,11 @@ namespace Vulk {
 		~VulkanRenderPass();
 		void CreateRenderPass();
 		inline std::shared_ptr<VulkanLogicalDevice> GetVulkanLogicalDevice() { return m_VulkanLogicalDevice; };
-		inline VkRenderPass GetRenderPass() { return m_RenderPass; };
+		inline VkRenderPass* GetRenderPass() { return m_RenderPass; };
 	private:
 		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
-		VkRenderPass m_RenderPass = VK_NULL_HANDLE;
+		VkRenderPass* m_RenderPass = VK_NULL_HANDLE;
 	private:
 		//@todo delete duplicate in VulkanImageView
 		VkFormat FindDepthFormat();

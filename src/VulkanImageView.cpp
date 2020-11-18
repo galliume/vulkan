@@ -6,14 +6,14 @@ namespace Vulk {
         : m_VulkanSwapChain(vulkanSwapChain), m_VulkanLogicalDevice(vulkanLogicalDevice)
     {
         
-        VULK_INFO(m_VulkanSwapChain->GetSwapChainImage().size());
-        m_VulkanSwapChain->GetSwapChainImageViews().resize(m_VulkanSwapChain->GetSwapChainImage().size());
-        VULK_INFO(m_VulkanSwapChain->GetSwapChainImageViews().size());
-        for (uint32_t i = 0; i < m_VulkanSwapChain->GetSwapChainImage().size(); i++)
+        VULK_INFO(m_VulkanSwapChain->GetSwapChainImage()->size());
+        m_VulkanSwapChain->GetSwapChainImageViews()->resize(m_VulkanSwapChain->GetSwapChainImage()->size());
+        VULK_INFO(m_VulkanSwapChain->GetSwapChainImageViews()->size());
+        for (uint32_t i = 0; i < m_VulkanSwapChain->GetSwapChainImage()->size(); i++)
         {
-            m_VulkanSwapChain->GetSwapChainImageViews()[i] = CreateImageView(
-                m_VulkanSwapChain->GetSwapChainImage()[i], 
-                m_VulkanSwapChain->GetSwapChainImageFormat(),
+            (*m_VulkanSwapChain->GetSwapChainImageViews())[i] = *CreateImageView(
+                (*m_VulkanSwapChain->GetSwapChainImage())[i], 
+                *m_VulkanSwapChain->GetSwapChainImageFormat(),
                 VK_IMAGE_ASPECT_COLOR_BIT
             );
         }
@@ -24,7 +24,7 @@ namespace Vulk {
 
     }
 
-    VkImageView VulkanImageView::CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
+    VkImageView* VulkanImageView::CreateImageView(VkImage image, VkFormat format, VkImageAspectFlags aspectFlags)
     {
         VkImageViewCreateInfo viewInfo{};
         viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -37,7 +37,7 @@ namespace Vulk {
         viewInfo.subresourceRange.baseArrayLayer = 0;
         viewInfo.subresourceRange.layerCount = 1;
 
-        if (vkCreateImageView(m_VulkanLogicalDevice->GetDevice(), &viewInfo, nullptr, &m_ImageView) != VK_SUCCESS)
+        if (vkCreateImageView(*m_VulkanLogicalDevice->GetDevice(), &viewInfo, nullptr, m_ImageView) != VK_SUCCESS)
         {
             VULK_CRITICAL("failed to create texture image view!");
         }
@@ -50,14 +50,14 @@ namespace Vulk {
         VkFormat depthFormat = FindDepthFormat();
 
         CreateImage(
-            m_VulkanSwapChain->GetSwapChainExtent().width,
-            m_VulkanSwapChain->GetSwapChainExtent().height,
+            m_VulkanSwapChain->GetSwapChainExtent()->width,
+            m_VulkanSwapChain->GetSwapChainExtent()->height,
             depthFormat,
             VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-            m_DepthImage,
-            m_DepthImageMemory
+            *m_DepthImage,
+            *m_DepthImageMemory
         );
-        m_DepthImageView = CreateImageView(m_DepthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);
+        m_DepthImageView = CreateImageView(*m_DepthImage, depthFormat, VK_IMAGE_ASPECT_DEPTH_BIT);
     }
 
     void VulkanImageView::CreateImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory) {
@@ -76,31 +76,31 @@ namespace Vulk {
         imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
         imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-        if (vkCreateImage(m_VulkanLogicalDevice->GetDevice(), &imageInfo, nullptr, &image) != VK_SUCCESS)
+        if (vkCreateImage(*m_VulkanLogicalDevice->GetDevice(), &imageInfo, nullptr, &image) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to create image!");
         }
 
         VkMemoryRequirements memRequirements;
-        vkGetImageMemoryRequirements(m_VulkanLogicalDevice->GetDevice(), image, &memRequirements);
+        vkGetImageMemoryRequirements(*m_VulkanLogicalDevice->GetDevice(), image, &memRequirements);
 
         VkMemoryAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
         allocInfo.allocationSize = memRequirements.size;
         allocInfo.memoryTypeIndex = FindMemoryType(memRequirements.memoryTypeBits, properties);
 
-        if (vkAllocateMemory(m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
+        if (vkAllocateMemory(*m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &imageMemory) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to allocate image memory!");
         }
 
-        vkBindImageMemory(m_VulkanLogicalDevice->GetDevice(), image, imageMemory, 0);
+        vkBindImageMemory(*m_VulkanLogicalDevice->GetDevice(), image, imageMemory, 0);
     }
 
     uint32_t VulkanImageView::FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties)
     {
         VkPhysicalDeviceMemoryProperties memProperties;
-        vkGetPhysicalDeviceMemoryProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), &memProperties);
+        vkGetPhysicalDeviceMemoryProperties(*m_VulkanLogicalDevice->GetPhysicalDevice(), &memProperties);
 
         for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++)
         {
@@ -127,7 +127,7 @@ namespace Vulk {
         for (VkFormat format : candidates)
         {
             VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
+            vkGetPhysicalDeviceFormatProperties(*m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
 
             if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
             {

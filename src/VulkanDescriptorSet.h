@@ -26,7 +26,7 @@ namespace Vulk {
 		);
 		~VulkanDescriptorSet();
 		void CreateDescriptorSets();
-		inline std::vector<VkDescriptorSet> GetDescriptorSets() { return m_DescriptorSets; };
+		inline std::vector<VkDescriptorSet>* GetDescriptorSets() { return m_DescriptorSets; };
 		inline std::shared_ptr<VulkanSwapChain> GetVulkanSwapChain() { return m_VulkanSwapChain; };
 	private:
 		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
@@ -35,7 +35,7 @@ namespace Vulk {
 		std::shared_ptr<VulkanTextureSampler> m_VulkanTextureSampler = nullptr;
 		std::shared_ptr<VulkanDescriptorPool> m_VulkanDescriptorPool = nullptr;
 		std::shared_ptr<VulkanUniformBuffer> m_VulkanUniformBuffer = nullptr;
-		std::vector<VkDescriptorSet> m_DescriptorSets = { };
-		VkDescriptorSetLayout m_DescriptorSetLayout = VK_NULL_HANDLE;
+		std::vector<VkDescriptorSet>* m_DescriptorSets = { };
+		VkDescriptorSetLayout* m_DescriptorSetLayout = VK_NULL_HANDLE;
 	};
 }

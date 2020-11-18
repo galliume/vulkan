@@ -38,25 +38,25 @@ namespace Vulk {
         );
 
         void* data;
-        vkMapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, 0, imageSize, 0, &data);
+        vkMapMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, 0, imageSize, 0, &data);
         memcpy(data, pixels, static_cast<size_t>(imageSize));
-        vkUnmapMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory);
+        vkUnmapMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory);
 
         stbi_image_free(pixels);
 
         m_VulkanImageView->CreateImage(
             texWidth, texHeight, 
             VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT, 
-            m_TextureImage, 
-            m_TextureImageMemory
+            *m_TextureImage, 
+            *m_TextureImageMemory
         );
 
-        TransitionImageLayout(m_TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
-        CopyBufferToImage(stagingBuffer, m_TextureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
-        TransitionImageLayout(m_TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
+        TransitionImageLayout(*m_TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL);
+        CopyBufferToImage(stagingBuffer, *m_TextureImage, static_cast<uint32_t>(texWidth), static_cast<uint32_t>(texHeight));
+        TransitionImageLayout(*m_TextureImage, VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
-        vkDestroyBuffer(m_VulkanLogicalDevice->GetDevice(), stagingBuffer, nullptr);
-        vkFreeMemory(m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, nullptr);
+        vkDestroyBuffer(*m_VulkanLogicalDevice->GetDevice(), stagingBuffer, nullptr);
+        vkFreeMemory(*m_VulkanLogicalDevice->GetDevice(), stagingBufferMemory, nullptr);
     }
 
     void VulkanTextureImage::CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory)
@@ -67,25 +67,25 @@ namespace Vulk {
         bufferInfo.usage = usage;
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
-        if (vkCreateBuffer(m_VulkanLogicalDevice->GetDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
+        if (vkCreateBuffer(*m_VulkanLogicalDevice->GetDevice(), &bufferInfo, nullptr, &buffer) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to create buffer");
         }
 
         VkMemoryRequirements memRequirements;
-        vkGetBufferMemoryRequirements(m_VulkanLogicalDevice->GetDevice(), buffer, &memRequirements);
+        vkGetBufferMemoryRequirements(*m_VulkanLogicalDevice->GetDevice(), buffer, &memRequirements);
 
         VkMemoryAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
         allocInfo.allocationSize = memRequirements.size;
         allocInfo.memoryTypeIndex = m_VulkanImageView->FindMemoryType(memRequirements.memoryTypeBits, properties);
 
-        if (vkAllocateMemory(m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
+        if (vkAllocateMemory(*m_VulkanLogicalDevice->GetDevice(), &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS)
         {
             throw std::runtime_error("failed to allocate buffer memory");
         }
 
-        vkBindBufferMemory(m_VulkanLogicalDevice->GetDevice(), buffer, bufferMemory, 0);
+        vkBindBufferMemory(*m_VulkanLogicalDevice->GetDevice(), buffer, bufferMemory, 0);
     }
 
     void VulkanTextureImage::TransitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout)
@@ -175,11 +175,11 @@ namespace Vulk {
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-        allocInfo.commandPool = m_VulkanCommandPool->GetCommandPool();
+        allocInfo.commandPool = *m_VulkanCommandPool->GetCommandPool();
         allocInfo.commandBufferCount = 1;
 
         VkCommandBuffer commandBuffer;
-        vkAllocateCommandBuffers(m_VulkanLogicalDevice->GetDevice(), &allocInfo, &commandBuffer);
+        vkAllocateCommandBuffers(*m_VulkanLogicalDevice->GetDevice(), &allocInfo, &commandBuffer);
 
         VkCommandBufferBeginInfo beginInfo{};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -199,15 +199,15 @@ namespace Vulk {
         submitInfo.commandBufferCount = 1;
         submitInfo.pCommandBuffers = &commandBuffer;
 
-        vkQueueSubmit(m_VulkanLogicalDevice->GetGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
-        vkQueueWaitIdle(m_VulkanLogicalDevice->GetGraphicsQueue());
+        vkQueueSubmit(*m_VulkanLogicalDevice->GetGraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+        vkQueueWaitIdle(*m_VulkanLogicalDevice->GetGraphicsQueue());
 
-        vkFreeCommandBuffers(m_VulkanLogicalDevice->GetDevice(), m_VulkanCommandPool->GetCommandPool(), 1, &commandBuffer);
+        vkFreeCommandBuffers(*m_VulkanLogicalDevice->GetDevice(), *m_VulkanCommandPool->GetCommandPool(), 1, &commandBuffer);
     }
 
-    VkImageView VulkanTextureImage::CreateTextureImageView()
+    VkImageView* VulkanTextureImage::CreateTextureImageView()
     {
-        m_TextureImageView = m_VulkanImageView->CreateImageView(GetTextureImage(), VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
+        m_TextureImageView = m_VulkanImageView->CreateImageView(*GetTextureImage(), VK_FORMAT_R8G8B8A8_SRGB, VK_IMAGE_ASPECT_COLOR_BIT);
         return m_TextureImageView;
     }
 }

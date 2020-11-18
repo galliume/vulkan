@@ -19,7 +19,7 @@ namespace Vulk {
     void VulkanRenderPass::CreateRenderPass()
     {
         VkAttachmentDescription colorAttachment{};
-        colorAttachment.format = m_VulkanSwapChain->GetSwapChainImageFormat();
+        colorAttachment.format = *m_VulkanSwapChain->GetSwapChainImageFormat();
         colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
         colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
         colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
@@ -70,7 +70,7 @@ namespace Vulk {
         renderPassInfo.dependencyCount = 1;
         renderPassInfo.pDependencies = &dependency;
 
-        if (vkCreateRenderPass(m_VulkanLogicalDevice->GetDevice(), &renderPassInfo, nullptr, &m_RenderPass) != VK_SUCCESS)
+        if (vkCreateRenderPass(*m_VulkanLogicalDevice->GetDevice(), &renderPassInfo, nullptr, m_RenderPass) != VK_SUCCESS)
         {
             throw std::runtime_error("Can't create render pass");
         }
@@ -90,7 +90,7 @@ namespace Vulk {
         for (VkFormat format : candidates)
         {
             VkFormatProperties props;
-            vkGetPhysicalDeviceFormatProperties(m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
+            vkGetPhysicalDeviceFormatProperties(*m_VulkanLogicalDevice->GetPhysicalDevice(), format, &props);
 
             if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features)
             {

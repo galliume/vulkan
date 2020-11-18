@@ -27,15 +27,15 @@ namespace Vulk {
 			std::shared_ptr<VulkanDescriptorSetLayout> vulkanDescriptorSetLayout
 		);
 		~VulkanGraphicPipeLine();
-		inline VkPipeline GetGraphicsPipeline() { return m_GraphicsPipeline; };
-		inline VkPipelineLayout GetPipelineLayout() { return m_PipelineLayout; };
+		inline VkPipeline* GetGraphicsPipeline() { return m_GraphicsPipeline; };
+		inline VkPipelineLayout* GetPipelineLayout() { return m_PipelineLayout; };
 	private:
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		std::shared_ptr<VulkanRenderPass> m_VulkanRenderPass = VK_NULL_HANDLE;
 		std::shared_ptr<VulkanSwapChain> m_VulkanSwapChain = nullptr;
 		std::shared_ptr<VulkanDescriptorSetLayout> m_VulkanDescriptorSetLayout = nullptr;
-		VkPipeline m_GraphicsPipeline = VK_NULL_HANDLE;
-		VkPipelineLayout m_PipelineLayout = VK_NULL_HANDLE;
+		VkPipeline* m_GraphicsPipeline = VK_NULL_HANDLE;
+		VkPipelineLayout* m_PipelineLayout = VK_NULL_HANDLE;
 	private:
 		void CreateGraphicsPipeline();
 		VkShaderModule CreateShaderModule(const std::vector<char>& code);

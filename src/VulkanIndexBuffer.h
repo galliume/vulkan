@@ -24,16 +24,16 @@ namespace Vulk {
 		);
 		~VulkanIndexBuffer();
 		void CreateIndexBuffer();
-		inline VkBuffer GetIndexBuffer() { return m_IndexBuffer; };
-		inline VkDeviceMemory GetIndexBufferMemory() { return m_IndexBufferMemory; };
+		inline VkBuffer* GetIndexBuffer() { return m_IndexBuffer; };
+		inline VkDeviceMemory* GetIndexBufferMemory() { return m_IndexBufferMemory; };
 	private:
 		std::shared_ptr<VulkanLogicalDevice> m_VulkanLogicalDevice = nullptr;
 		std::shared_ptr<VulkanImageView> m_VulkanImageView = VK_NULL_HANDLE;
 		std::shared_ptr<VulkanCommandPool> m_VulkanCommandPool = VK_NULL_HANDLE;
-		VkBuffer m_VertexBuffer = VK_NULL_HANDLE;
-		VkDeviceMemory m_VertexBufferMemory = VK_NULL_HANDLE;
-		VkBuffer m_IndexBuffer = VK_NULL_HANDLE;
-		VkDeviceMemory m_IndexBufferMemory = VK_NULL_HANDLE;
+		VkBuffer* m_VertexBuffer = VK_NULL_HANDLE;
+		VkDeviceMemory* m_VertexBufferMemory = VK_NULL_HANDLE;
+		VkBuffer* m_IndexBuffer = VK_NULL_HANDLE;
+		VkDeviceMemory* m_IndexBufferMemory = VK_NULL_HANDLE;
 	private:
 		//@todo duplicate in VulkanTextureImage
 		void CreateBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
