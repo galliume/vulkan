@@ -2,7 +2,6 @@
 
 namespace Vulk {
 
-    //Move in VulkUtils ? 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageType, const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData, void* pUserData)
     {
         switch (messageSeverity) {
@@ -19,6 +18,25 @@ namespace Vulk {
         }
         }
         return VK_FALSE;
+    }
+
+    VkResult VulkanContext::CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback)
+    {
+        auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+        if (func != nullptr) {
+            return func(instance, pCreateInfo, pAllocator, pCallback);
+        }
+        else {
+            return VK_ERROR_EXTENSION_NOT_PRESENT;
+        }
+    }
+
+    void VulkanContext::DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback, const VkAllocationCallbacks* pAllocator)
+    {
+        auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
+        if (func != nullptr) {
+            func(instance, callback, pAllocator);
+        }
     }
 
     VulkanContext::VulkanContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
@@ -51,34 +69,39 @@ namespace Vulk {
         features.enabledValidationFeatureCount = 1;
         features.pEnabledValidationFeatures = enables;
 
+        auto extensions = GetRequiredExtensions();
         VkInstanceCreateInfo createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
         createInfo.pApplicationInfo = &appInfo;
         createInfo.pNext = &features;
-
-        uint32_t glfwExtensionCount = 0;
-        const char** glfwExtensions;
-
-        glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-        auto extensions = GetRequiredExtensions();
         createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
         createInfo.ppEnabledExtensionNames = extensions.data();
-
-        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
         createInfo.enabledLayerCount = static_cast<uint32_t>(m_ValidationLayers.size());
         createInfo.ppEnabledLayerNames = m_ValidationLayers.data();
-        PopulateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*)&debugCreateInfo;
 
-        if (vkCreateInstance(&createInfo, nullptr, m_VkInstance) != VK_SUCCESS) {
+        VkInstance instance = nullptr;
+        VkSurfaceKHR surface = VK_NULL_HANDLE;
+
+        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
             VULK_CRITICAL("failed to create Vulkan instance!");
         }
 
-        if (glfwCreateWindowSurface(*m_VkInstance, m_WindowHandle, nullptr, m_Surface) != VK_SUCCESS) {
+        if (glfwCreateWindowSurface(instance, m_WindowHandle, nullptr, &surface) != VK_SUCCESS) {
             VULK_CRITICAL("Can't create the surface");
         }
 
+        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
+        PopulateDebugMessengerCreateInfo(debugCreateInfo);
+
+        VkDebugUtilsMessengerEXT debugUtilsCallback = VK_NULL_HANDLE;
+        if (CreateDebugUtilsMessengerEXT(instance, &debugCreateInfo, nullptr, &debugUtilsCallback) != VK_SUCCESS)
+        {
+            VULK_ERROR("le messager n'a pas pu être créé!");
+        }
+
+        m_VkInstance = &instance;
+        m_Surface = &surface;
+        m_DebugUtilsCallback = &debugUtilsCallback;
         VULK_TRACE("VulkanContext created (instance and surface)");
     }
 

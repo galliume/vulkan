@@ -2,27 +2,6 @@
 
 namespace Vulk 
 {
-    //Move in VulkUtils ? 
-    VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback)
-    {
-        auto func = (PFN_vkCreateDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
-        if (func != nullptr) {
-            return func(instance, pCreateInfo, pAllocator, pCallback);
-        }
-        else {
-            return VK_ERROR_EXTENSION_NOT_PRESENT;
-        }
-    }
-
-    //Move in VulkUtils ? 
-    void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback, const VkAllocationCallbacks* pAllocator)
-    {
-        auto func = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
-        if (func != nullptr) {
-            func(instance, callback, pAllocator);
-        }
-    }
-
 	VulkanService::VulkanService(GLFWwindow* window) : m_Window(window)
 	{
 		 m_VulkanContext = std::make_shared<VulkanContext>(m_Window);
@@ -85,7 +64,7 @@ namespace Vulk
 
         vkDestroyDevice(*m_VulkanLogicalDevice->GetDevice(), nullptr);
 
-        DestroyDebugUtilsMessengerEXT(*m_VulkanContext->GetInstance(), m_DebugUtilsCallback, nullptr);
+        m_VulkanContext->DestroyDebugUtilsMessengerEXT(*m_VulkanContext->GetInstance(), *m_VulkanContext->GetDebugUtilsCallback(), nullptr);
 
         vkDestroySurfaceKHR(*m_VulkanContext->GetInstance(), *m_VulkanContext->GetSurface(), nullptr);
         vkDestroyInstance(*m_VulkanContext->GetInstance(), nullptr);

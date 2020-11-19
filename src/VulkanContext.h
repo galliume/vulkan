@@ -15,6 +15,9 @@ namespace Vulk {
 		inline GLFWwindow* GetWindow() { return m_WindowHandle; };
 		inline VkInstance* GetInstance() { return m_VkInstance; };
 		inline VkSurfaceKHR* GetSurface() { return m_Surface; };
+		inline VkDebugUtilsMessengerEXT* GetDebugUtilsCallback() { return m_DebugUtilsCallback; };
+		VkResult CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pCallback);
+		void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT callback, const VkAllocationCallbacks* pAllocator);
 	private:
 		GLFWwindow* m_WindowHandle = nullptr;
 		VkInstance* m_VkInstance = nullptr;
@@ -25,5 +28,6 @@ namespace Vulk {
 		bool CheckValidationLayerSupport();
 		std::vector<const char*> GetRequiredExtensions();
 		void PopulateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& createInfo);
+		VkDebugUtilsMessengerEXT* m_DebugUtilsCallback = VK_NULL_HANDLE;
 	};
 }

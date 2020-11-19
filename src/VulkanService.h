@@ -75,7 +75,5 @@ namespace Vulk
 		bool* m_FramebufferResized = false;
 		VkQueue* m_GraphicsQueue = VK_NULL_HANDLE;
 		VkQueue* m_PresentQueue = VK_NULL_HANDLE;
-
-		VkDebugUtilsMessengerEXT m_DebugUtilsCallback = VK_NULL_HANDLE;
 	};
 }
