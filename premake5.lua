@@ -35,7 +35,8 @@ project "VulkanImpl"
 		"vendor/stb_image/**.h",
 		"vendor/stb_image/**.cpp",
 		"vendor/GLM/glm/**.hpp",
-		"vendor/GLM/glm/**.inl"
+		"vendor/GLM/glm/**.inl",
+		"vendor/tiny_obj_loader/tiny_obj_loader.h"
 	}
 
 	defines
@@ -48,6 +49,7 @@ project "VulkanImpl"
 		"src",
 		"vendor/spdlog/include",
 		"vendor/stb_image",
+		"vendor/tiny_obj_loader",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.vulkan}"

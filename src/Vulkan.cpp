@@ -1,7 +1,12 @@
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "tiny_obj_loader.h"
+
+#define GLM_FORCE_RADIANS
+
 #include "Vulkan.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
-#define GLM_FORCE_RADIANS
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "stb_image.h"
@@ -10,11 +15,12 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 #include <set>
+#include <unordered_map>
 #include <fstream>
 #include <chrono>
 #include "iostream"
 
-constexpr bool enableValidationLayers = true;
+constexpr bool enableValidationLayers = false;
 
 std::shared_ptr<spdlog::logger>Logger = spdlog::stdout_color_mt("VulkanImpl");
 
@@ -80,6 +86,7 @@ void DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT
     }
 }
 
+
 Vulkan* Vulkan::s_Instance = nullptr;
 
 Vulkan::Vulkan()
@@ -106,6 +113,7 @@ void Vulkan::init(GLFWwindow* glfWwindow)
     createTextureImage();
     createTextureImageView();
     createTextureSampler();
+    loadModel();
     createVertexBuffer();
     createIndexBuffer();
     createUniformBuffers();
@@ -630,7 +638,6 @@ bool Vulkan::isDeviceSuitable(VkPhysicalDevice device)
     {
         SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
-
     }
     
     VkPhysicalDeviceFeatures supportedFeatures;
@@ -896,7 +903,7 @@ void Vulkan::createCommandBuffers()
         VkDeviceSize offsets[] = { 0 };
 
         vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
-        vkCmdBindIndexBuffer(commandBuffers[i], indexBuffer, 0, VK_INDEX_TYPE_UINT16);
+        vkCmdBindIndexBuffer(commandBuffers[i], indexBuffer, 0, VK_INDEX_TYPE_UINT32);
         vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, pipelineLayout, 0, 1, &descriptorSets[i], 0, nullptr);
         vkCmdDrawIndexed(commandBuffers[i], static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);           
         vkCmdEndRenderPass(commandBuffers[i]);
@@ -1298,7 +1305,8 @@ void Vulkan::createDescriptorSets()
 void Vulkan::createTextureImage() 
 {
     int texWidth, texHeight, texChannels;
-    stbi_uc* pixels = stbi_load("textures/rebelleTexture.jpg", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+    //stbi_uc* pixels = stbi_load("textures/rebelleTexture.jpg", &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+    stbi_uc* pixels = stbi_load(TEXTURE_PATH.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
     VkDeviceSize imageSize = texWidth * texHeight * 4;
 
     if (!pixels) 
@@ -1574,4 +1582,46 @@ VkFormat Vulkan::findDepthFormat()
 bool Vulkan::hasStencilComponent(VkFormat format) 
 {
     return format == VK_FORMAT_D32_SFLOAT_S8_UINT || format == VK_FORMAT_D24_UNORM_S8_UINT;
+}
+
+void Vulkan::loadModel() 
+{
+    tinyobj::attrib_t attrib;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
+    std::string warn, err;
+
+    if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, MODEL_PATH.c_str())) {
+        throw std::runtime_error(warn + err);
+    }
+
+    std::unordered_map<Vertex, uint32_t> uniqueVertices{};
+
+    for (const auto& shape : shapes) {
+        for (const auto& index : shape.mesh.indices) {
+
+            Vertex vertex{};
+
+            vertex.pos = {
+                attrib.vertices[3 * index.vertex_index + 0],
+                attrib.vertices[3 * index.vertex_index + 1],
+                attrib.vertices[3 * index.vertex_index + 2]
+            };
+
+            vertex.texCoord = {
+                attrib.texcoords[2 * index.texcoord_index + 0],
+                1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
+            };
+
+            vertex.color = { 1.0f, 1.0f, 1.0f };
+            vertices.push_back(vertex);
+
+            if (uniqueVertices.count(vertex) == 0) {
+                uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+                vertices.push_back(vertex);
+            }
+
+            indices.push_back(uniqueVertices[vertex]);
+        }
+    }
 }

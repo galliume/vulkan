@@ -28,6 +28,9 @@
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\tiny_obj_loader">
+      <UniqueIdentifier>{D6D36F96-C2CD-98E8-AB3A-2FF997D3FE54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Vulkan.h">
@@ -1259,6 +1262,9 @@
     </ClInclude>
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\tiny_obj_loader\tiny_obj_loader.h">
+      <Filter>vendor\tiny_obj_loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
